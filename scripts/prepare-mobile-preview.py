@@ -8,6 +8,7 @@ preview = root / 'mobile-preview'
 original = (root/'index.html').read_text(encoding='utf-8')
 s = original
 s = s.replace('<h1>RECREO LAS VEGAS</h1>', '<h2>RECREO LAS VEGAS</h2>')
+s = s.replace('<div class="login-card">', '<div class="login-card"><div class="login-mark"><img src="logo-las-vegas.png" alt="Las Vegas" width="150" height="150"></div>')
 s = s.replace('</head>', '<link rel="manifest" href="manifest.webmanifest">\n<link rel="stylesheet" href="mobile.css">\n<script src="holidays.js"></script>\n<script src="festivals.js"></script>\n<script src="mobile.js"></script>\n</head>')
 s = s.replace('<body>', '<body><div class="wrap theme-toolbar"><div class="theme-options" role="group" aria-label="Apariencia"><button type="button" data-theme-choice="light" aria-pressed="false">Claro</button><button type="button" data-theme-choice="dark" aria-pressed="true">Oscuro</button></div></div>')
 s = s.replace('<header class="wrap topbar">', '<p id="connection-banner" class="connection-banner" role="status" hidden></p>\n  <header class="wrap topbar">')

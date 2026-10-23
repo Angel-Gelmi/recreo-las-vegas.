@@ -1,4 +1,4 @@
-/* Mobile first: calendario al alcance del pulgar, superficie negra de la marca. */
+/* Las Vegas: calendar-led workspace, quiet green identity, shared light/dark tokens. */
 :root { --radius:16px; }
 :root[data-theme="light"] { --ground:#f5f6f3; --surface:#fff; --raised:#e6e9e2; --text:#20251d; --muted:#53604c; --faint:#687262; --rule:#dbe0d5; --control:#838d7b; --accent:#3e6411; --positive:#e7f0d8; --warning:#815600; --warning-bg:#fff0cf; --negative:#b5283b; }
 :root[data-theme="light"] .day:nth-child(7n),:root[data-theme="light"] .day:nth-child(7n+1) { background:#f2f4ee; }
@@ -177,4 +177,141 @@ footer { font-size:11px; flex-direction:column; gap:6px; margin-top:20px; }
   .day .booking-owner { font-size:11px; }
   .modal-actions>div { width:100%; }
   .modal-actions { align-items:stretch; }
+}
+
+/* Workspace system: 8px spacing rhythm; data stays green, navigation stays quiet. */
+:root { --ground:#101310; --surface:#191d19; --raised:#272e27; --text:#f0f3ed; --muted:#b6c0b1; --faint:#98a393; --rule:#30392e; --control:#697663; --accent:#a9cd89; --positive:#263820; --warning:#e4ba77; --warning-bg:#382f20; --negative:#ed9e9d; --radius:12px; }
+:root[data-theme="light"] { --ground:#f1f4ee; --surface:#fff; --raised:#e7ede1; --text:#202b20; --muted:#52634e; --faint:#687661; --rule:#dce3d6; --control:#85917c; --accent:#386228; --positive:#e9f2e2; --warning:#855810; --warning-bg:#faf0db; --negative:#b23940; }
+body { line-height:1.6; }
+.wrap { width:min(1320px,100%); }
+button,input,select,textarea { border-radius:10px; }
+button { transition:background-color 140ms ease,color 140ms ease,opacity 140ms ease; }
+button:active { opacity:.78; }
+:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+.theme-toolbar { padding-top:max(8px,env(safe-area-inset-top)); padding-bottom:0; }
+.theme-options { border-color:var(--rule); border-radius:10px; padding:2px; }
+.theme-options button { font-size:13px; min-height:44px; padding:6px 14px; border-radius:7px; }
+.topbar { min-height:78px; padding-top:0; padding-bottom:12px; border-bottom:1px solid var(--rule); }
+.brand-context { display:block; font-size:13px; line-height:1.5; letter-spacing:0; }
+.brand-logo { width:76px; height:44px; }
+.brand-logo img { width:114px; height:114px; left:-19px; top:-32px; }
+.connection { font-size:13px; }
+main { padding-top:22px; }
+.title-row h1 { font-size:24px; letter-spacing:-.04em; line-height:1.25; }
+.toolbar { margin:16px 0; padding:8px 0; gap:10px; }
+.venue-tabs { border:0; background:var(--raised); border-radius:10px; padding:4px; }
+.venue-tabs button { font-size:14px; min-width:72px; border-radius:7px; letter-spacing:.02em; }
+.venue-tabs button[aria-pressed="true"] { background:var(--surface); color:var(--text); }
+.scope select { border-color:var(--rule); }
+.calendar { border-radius:12px; border:1px solid var(--rule); }
+.panel-head { padding:16px 12px 12px; gap:12px; }
+.month-nav h2 { font-size:18px; font-weight:600; letter-spacing:-.02em; }
+.icon-button { border-radius:8px; background:var(--ground); border:1px solid var(--rule); }
+.legend { font-size:13px; gap:12px; }
+.weekdays { font-size:13px; padding:12px 0; }
+.day { min-height:66px; padding:7px 2px; gap:5px; }
+.day-number { font-size:15px; font-weight:500; }
+.day:nth-child(7n),.day:nth-child(7n+1) { background:var(--ground); }
+.day.inactive { background:var(--ground); }
+.day.selected { background:var(--positive)!important; box-shadow:inset 0 0 0 2px var(--accent); }
+.day .holiday-name { font-size:12px; letter-spacing:-.015em; }
+.day .booking-owner { font-size:12px; font-weight:600; }
+.calendar-foot { font-size:13px; padding:14px; border-top:1px solid var(--rule); }
+.day-detail { border-radius:12px; padding:20px; border:1px solid var(--rule); }
+.day-detail h2 { font-size:18px; letter-spacing:-.025em; }
+.day-detail .detail-status { font-size:13px; }
+.day-detail .detail-event { font-size:21px; line-height:1.4; margin-top:18px; }
+.detail-meta { font-size:14px; flex-wrap:wrap; gap:4px 16px; }
+.detail-holidays { gap:6px; margin-top:12px; }
+.holiday-caption { font-size:14px; }
+.detail-hint { font-size:14px; }
+.detail-actions { gap:8px; }
+.detail-actions a,.whatsapp-link { border-radius:10px; border:1px solid var(--rule); background:var(--positive); color:var(--accent); font-weight:500; }
+.metrics { background:none; padding:20px 0; margin-top:0; gap:20px 0; }
+.metric { padding-inline:16px; }
+.metric dt { font-size:13px; }
+.metric dd,.metric dd.money { font-size:22px; font-weight:500; letter-spacing:-.025em; }
+.metric dd.money { font-size:18px; }
+.month-festivities { padding:16px 20px; border:1px solid var(--rule); border-radius:12px; }
+.month-festivities summary { font-size:16px; font-weight:500; }
+.holiday-row span { font-size:14px; }
+.season-notice { background:none; border-left:2px solid var(--rule); border-radius:0; font-size:13px; padding:8px 12px; }
+.rail { border-radius:12px; border:1px solid var(--rule); padding:20px; }
+.rail-head h2 { font-size:18px; letter-spacing:-.025em; }
+.rail-head span,.rail>p { font-size:13px; }
+.search { background:var(--ground); font-size:14px; }
+.agenda-row { border-radius:0; padding:16px 0; }
+.storage-note { font-size:13px; }
+.bottom-nav { padding-top:6px; gap:4px; }
+.bottom-nav button { font-size:13px; min-height:58px; gap:4px; border-radius:9px; }
+.bottom-nav button[aria-current="page"] { background:var(--positive); color:var(--accent); }
+.bottom-nav svg { width:21px; height:21px; }
+.account-panel { border:1px solid var(--rule); border-radius:12px; padding:24px; }
+.account-panel .account-name { font-size:28px; letter-spacing:-.04em; }
+.account-panel p { font-size:15px; }
+dialog { border-color:var(--rule); border-radius:16px 16px 0 0; }
+dialog::backdrop { background:rgb(0 0 0 / .58); }
+.modal-head h2 { letter-spacing:-.025em; }
+form label { font-size:14px; font-weight:500; }
+input,select,textarea { border-color:var(--control); }
+.login-screen { min-height:calc(100dvh - 72px); padding:24px 20px; }
+.login-card { padding:32px 26px; gap:24px; border-radius:16px; }
+.login-card h2 { font-size:25px; letter-spacing:-.04em; text-align:left; }
+.login-card p { text-align:left; }
+.login-card form { gap:16px; }
+.login-card .small { font-size:13px; }
+.login-mark { width:100px; height:60px; position:relative; overflow:hidden; background:white; border-radius:8px; }
+.login-mark img { position:absolute; width:150px; height:150px; left:-25px; top:-42px; }
+footer { font-size:12px; }
+@media(hover:hover) and (pointer:fine) {
+  .day:not(.selected):hover { background:var(--raised); }
+  .agenda-row:hover,.holiday-row:hover { background:var(--ground); }
+}
+@media(min-width:768px) and (max-width:1099px) {
+  .wrap { padding-inline:32px; }
+  .day { min-height:86px; }
+  .day .holiday-name { font-size:13px; }
+}
+/* Desktop: 184px navigation + 24px gutter; calendar fills the remaining column. */
+@media(min-width:1100px) {
+  body { padding-bottom:24px; }
+  #app-shell>.wrap { width:calc(100% - 208px); max-width:1320px; margin-left:208px; padding-inline:28px; }
+  .topbar { min-height:82px; }
+  .title-row h1 { font-size:28px; }
+  .title-row p { font-size:14px; margin-top:8px; }
+  .workspace { grid-template-columns:minmax(0,1fr) 300px; gap:20px; }
+  .metrics { margin:0 0 20px; padding:0; gap:0; }
+  .metric dd,.metric dd.money { font-size:22px; }
+  .metric:first-child { padding-left:0; }
+  .bottom-nav { position:fixed; left:20px; top:196px; bottom:auto; right:auto; width:168px; max-width:none; transform:none; display:flex; flex-direction:column; background:none; padding:0; border:0; border-radius:0; gap:8px; }
+  .bottom-nav button { display:flex; flex-direction:row; align-items:center; justify-content:flex-start; gap:12px; padding:10px 14px; min-height:48px; font-size:14px; text-align:left; }
+  .bottom-nav svg { flex:none; }
+  .day { min-height:100px; padding:8px 5px; }
+  .day .holiday-name,.day .booking-title,.day .booking-owner { font-size:12px; }
+  .day .booking { padding:4px 5px; }
+  .day .booking.pending { border-left:2px dashed var(--warning); }
+  .legend { justify-content:flex-start; }
+  .panel-head { padding:18px; }
+  .new-mobile { max-width:240px; }
+  .account-panel { margin-top:32px; }
+  dialog { border-radius:16px; }
+}
+@media(prefers-reduced-motion:reduce) { button { transition:none; } }
+.preview-mode label { color:#fff; }
+:root[data-theme="light"] { --faint:#5b6955; }
+.topbar { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 12px; padding-top:14px; padding-bottom:14px; }
+.topbar .brand { grid-column:1; grid-row:1 / 3; }
+.topbar .theme-toolbar { grid-column:2; grid-row:1; width:auto; margin:0; padding:0; }
+.topbar .session-controls { grid-column:2; grid-row:2; max-width:none; }
+.topbar .theme-options button { padding-inline:12px; }
+.season-notice { order:3; margin-top:16px; }
+@media(min-width:1100px) {
+  .main-column { display:flex; flex-direction:column; }
+  .metrics { order:-2; }
+  .main-column .new-mobile { order:2; }
+  .panel-head { flex-wrap:nowrap; gap:16px; }
+  .month-nav { width:auto; flex:1; }
+  .legend { width:auto; flex-wrap:wrap; max-width:190px; }
+  .day { min-height:86px; }
+  .bottom-nav { top:150px; }
 }

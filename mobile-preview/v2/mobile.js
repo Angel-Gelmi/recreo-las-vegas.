@@ -3,7 +3,7 @@
   function apply(theme) {
     document.documentElement.dataset.theme=theme;
     document.documentElement.style.colorScheme=theme;
-    document.querySelector('meta[name="theme-color"]').content=theme==='light'?'#f5f6f3':'#000000';
+    document.querySelector('meta[name="theme-color"]').content=theme==='light'?'#f1f4ee':'#101310';
     document.querySelector('meta[name="color-scheme"]').content=theme;
     document.querySelectorAll('[data-theme-choice]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.themeChoice===theme)));
   }
@@ -39,6 +39,9 @@ window.createMobileUI = api => {
   }
   function render() {
     const s=api.state(),online=ready(),prefix=`2027-${String(s.month+1).padStart(2,'0')}-`;
+    const themeToolbar=document.querySelector('.theme-toolbar');
+    const themeHost=s.sessionRole?document.querySelector('.topbar'):document.body;
+    if(themeToolbar.parentElement!==themeHost)themeHost.prepend(themeToolbar);
     if(!selected?.startsWith(prefix))selected=prefix+'01';
     const monthlySeasons=seasons.filter(item=>item.months.includes(s.month+1)&&matches(item));
     $('season-notice').hidden=!monthlySeasons.length;
