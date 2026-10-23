@@ -163,7 +163,7 @@
         <label>Usuario<input id="login-user" autocomplete="username" value="lasvegas" required></label>
         <label>Contraseña<input id="login-password" type="password" autocomplete="current-password" required></label>
         <p id="login-error" class="error" role="alert" hidden></p>
-        <button type="submit" class="primary" id="login-submit">Iniciar sesión</button>
+        <button type="submit" class="primary" id="login-submit" disabled>Conectando…</button>
       </form>
       <p class="small">Solo personal autorizado. La sesión puede mantenerse abierta en este dispositivo.</p>
     </div>
@@ -265,6 +265,7 @@ service cloud.firestore {
   <script>
     'use strict';
     const $ = id => document.getElementById(id);
+    $('login-form').addEventListener('submit',e=>e.preventDefault());
     const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     const special = '2027-01-01';
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'calendario-2027-reservas-app-v2';
@@ -273,6 +274,10 @@ service cloud.firestore {
     const SHARED_LOGIN_EMAIL = 'lasvegas@gmail.com';
     const SHARED_LOGIN_USER = 'lasvegas';
     let authClient = null, authSDKClient = null, stopCloudListeners = [];
+    let editVersion=null;
+    function reservationVersion(r) {
+      return JSON.stringify([r.event||'',r.registeredBy||'Wilmer',r.status==='Pendiente'?'Pendiente':'Confirmado',Number(r.advance)||0,r.notes||'',r.updatedAt||'']);
+    }
     const showLogin = message => {
       $('app-shell').hidden=true;
       $('login-screen').hidden=false;
@@ -324,7 +329,7 @@ service cloud.firestore {
       const result={};
       if(validStore(value)) for(const [key,r] of Object.entries(value)) {
         if(!/^2027-\d{2}-\d{2}$/.test(key) || !validStore(r)) continue;
-        const date=new Date(key+'T12:00:00'); if(Number.isNaN(date.getTime()) || date.toISOString().slice(0,10)!==key) continue;
+        const date=new Date(key+'T12:00:00Z'); if(Number.isNaN(date.getTime()) || date.toISOString().slice(0,10)!==key) continue;
         result[key]={...r,event:String(r.event || ''),registeredBy:String(r.registeredBy || 'Wilmer'),notes:String(r.notes || ''),status:r.status==='Pendiente'?'Pendiente':'Confirmado',advance:Number.isFinite(Number(r.advance))?Math.max(0,Number(r.advance)):0};
       }
       result[special] ||= defaultReservation(); return result;
@@ -379,7 +384,8 @@ service cloud.firestore {
     }
     function formError(message) { $('form-error').textContent=message; $('form-error').hidden=!message; }
     function openModal(key=null) {
-      editKey=key; editVenue=venue; const r=key?stores[venue][key]:null, protectedDay=key===special;
+      editVenue=venue; const r=key?stores[venue][key]:null, protectedDay=key===special;
+      editKey=r?key:null; editVersion=r?reservationVersion(r):null;
       $('reservation-form').reset(); formError(''); $('delete-confirm').hidden=true;
       $('modal-date-title').textContent=protectedDay?'Reserva protegida':r?'Editar reserva':'Nueva reserva'; $('modal-date-subtitle').textContent=`Sede ${venue.toUpperCase()} · 2027`;
       $('res-date').value=key||''; $('res-date').disabled=!!key;
@@ -394,6 +400,7 @@ service cloud.firestore {
     function setBusy(value) { busy=value; for(const id of ['btn-save','btn-delete','confirm-delete','cancel-delete','close-modal','cancel-modal']) $(id).disabled=value; $('btn-save').textContent=value?'Guardando…':'Guardar reserva'; }
     async function commit(key,data) {
       if(key===special) throw new Error('El 1 de enero está protegido. Comunícate con Chino.');
+      if(!cloud) throw new Error('Inicia sesión y espera a que las reservas estén sincronizadas.');
       const target=editVenue;
       if(cloud) { if(!cloudReady[target])throw new Error('Espera a que se carguen las reservas de esta sede.'); await cloud.write(target,key,data); }
       const candidate={...stores,[target]:{...stores[target]}}; if(data)candidate[target][key]=data; else delete candidate[target][key];
@@ -466,6 +473,7 @@ service cloud.firestore {
               await fs.runTransaction(db,async transaction=>{
                 const existing=await transaction.get(ref);
                 if(data&&!editKey&&existing.exists()) throw new Error('Esta fecha acaba de reservarse en otro dispositivo. Cierra el formulario y revisa el calendario.');
+                if(editKey&&(!existing.exists()||reservationVersion(existing.data())!==editVersion)) throw new Error('Esta reserva cambió en otro dispositivo. Cierra el formulario y vuelve a abrirla antes de guardar o eliminar.');
                 if(data)transaction.set(ref,data);else transaction.delete(ref);
               });
             } catch(error) { if(error.code)throw new Error(firebaseError(error));throw error; }
@@ -490,8 +498,15 @@ service cloud.firestore {
           }
         }
         // Existing sessions are restored by Firebase on the same device.
-        if(auth.currentUser && !auth.currentUser.isAnonymous && auth.currentUser.email===SHARED_LOGIN_EMAIL) startSession();
-        else { if(auth.currentUser) await authSDK.signOut(auth); showLogin(''); }
+        authSDK.onAuthStateChanged(auth,user=>{
+          if(user && !user.isAnonymous && user.email===SHARED_LOGIN_EMAIL) startSession();
+          else {
+            stopListeners(); stores={gras:normalizeStore({}),recreo:normalizeStore({})};
+            modal.close(); showLogin(''); render();
+          }
+        });
+        $('login-submit').disabled=false;
+        $('login-submit').textContent='Iniciar sesión';
         $('login-form').addEventListener('submit',async e=>{
           e.preventDefault();
           const name=$('login-user').value.trim();
@@ -507,7 +522,6 @@ service cloud.firestore {
           try {
             await authSDK.signInWithEmailAndPassword(auth,SHARED_LOGIN_EMAIL,password);
             $('login-password').value='';
-            startSession();
           } catch(error) {
             $('login-error').textContent=loginError(error);
             $('login-error').hidden=false;

@@ -1,0 +1,5 @@
+.firebase/
+firebase-debug*.log
+.test-runtime/
+.taste-skill/
+vegas.before-redesign.html
