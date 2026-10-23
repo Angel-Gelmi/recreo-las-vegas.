@@ -2,7 +2,7 @@
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
-dest=Path(__file__).resolve().parents[1]/'mobile-preview/v2'
+dest=Path(__file__).resolve().parents[1]/'assets/icons'
 for name,size in [('app-icon-192.png',192),('app-icon-512.png',512),('app-icon-maskable.png',512)]:
     # Essential contents stay inside the maskable safe zone.
     scale=4

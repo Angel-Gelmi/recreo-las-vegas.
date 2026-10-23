@@ -2,7 +2,7 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
-const html = fs.readFileSync('index.html', 'utf8');
+const html = fs.readFileSync('src/templates/base.html', 'utf8');
 function section(start,end) { return html.slice(html.indexOf(start),html.indexOf(end,html.indexOf(start))); }
 function context(extra='') {
  const ctx=vm.createContext({localStorage:{setItem(){}}, console});
@@ -51,7 +51,7 @@ test('a completed write from a previous session cannot populate the next session
 });
 test('published copy matches reviewed mobile source',()=>assert.equal(fs.readFileSync('public/index.html','utf8'),fs.readFileSync('mobile-preview/v2/index.html','utf8')));
 test('referenced current logos exist',()=>{
- for(const file of ['logo-gras-blanco.png','logo-gras-app.webp','logo-las-vegas.png']) assert.ok(fs.existsSync('public/'+file));
+ for(const file of ['logo-gras-app.webp','logo-las-vegas.png']) assert.ok(fs.existsSync('public/'+file));
 });
 test('REGRESSION: calendar creation must reject concurrent reservation',()=>{
  // Execute the exact production transaction callback with a competing document.

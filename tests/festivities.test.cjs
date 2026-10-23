@@ -1,6 +1,6 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const context=vm.createContext({window:{},Date});
-for(const file of ['holidays.js','festivals.js'])vm.runInContext(fs.readFileSync('mobile-preview/v2/'+file,'utf8'),context);
+for(const file of ['holidays.js','festivals.js'])vm.runInContext(fs.readFileSync('src/data/'+file,'utf8'),context);
 const {VEGAS_HOLIDAYS:days,VEGAS_CALENDAR_SOURCES:sources,VEGAS_FESTIVAL_SEASONS:seasons,VEGAS_CALENDAR_META:meta}=context.window;
 const has=(date,text)=>(days[date]||[]).some(item=>item.name.includes(text));
 test('all 16 national holidays remain intact and distinct from celebrations',()=>{

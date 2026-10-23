@@ -5,7 +5,13 @@ import shutil
 
 root = Path(__file__).resolve().parents[1]
 preview = root / 'mobile-preview'
-original = (root/'index.html').read_text(encoding='utf-8')
+(preview/'v2').mkdir(parents=True,exist_ok=True)
+for folder in ['src/styles','src/js','src/data','src/pwa','assets/icons']:
+    for asset in (root/folder).iterdir():
+        if asset.is_file(): shutil.copyfile(asset,preview/'v2'/asset.name)
+for name in ['logo-gras-app.webp','logo-las-vegas.png']:
+    shutil.copyfile(root/'assets/images'/name,preview/'v2'/name)
+original = (root/'src/templates/base.html').read_text(encoding='utf-8')
 s = original
 s = s.replace('<h1>RECREO LAS VEGAS</h1>', '<h2>RECREO LAS VEGAS</h2>')
 s = s.replace('<div class="login-card">', '<div class="login-card"><div class="login-mark"><img src="logo-las-vegas.png" alt="Las Vegas" width="150" height="150"></div>')
@@ -76,5 +82,5 @@ for version in ['v1','v2']:
     page=page.replace('storageKey=`${localStorageKey}:cloud:${config.projectId}`;', "storageKey=`${localStorageKey}:preview-demo`;" )
     (preview/version/'demo.html').write_bytes(page.encode('utf-8'))
 
-(preview/'V1-SHA256.txt').write_text(hashlib.sha256((preview/'v1/index.html').read_bytes()).hexdigest()+'  v1/index.html\n',encoding='utf-8')
-print('Prepared V2 and isolated V1/V2 demos. Original index.html and public/ untouched.')
+(preview/'V1-SHA256.txt').write_bytes((hashlib.sha256((preview/'v1/index.html').read_bytes()).hexdigest()+'  v1/index.html\n').encode('utf-8'))
+print('Prepared V2 and isolated V1/V2 demos. Source files and public/ untouched.')

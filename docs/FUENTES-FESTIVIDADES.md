@@ -1,6 +1,6 @@
 # Calendario 2027 · Perú y Ayacucho
 
-Revisión: **23 de octubre de 2026**. Solo V2 de vista previa. V1 y producción se mantienen intactas.
+Revisión: **23 de octubre de 2026**. Catálogo editorial generado desde `src/data/`. La aplicación muestra únicamente los nombres; las referencias se conservan en esta documentación.
 
 Incluye **75 entradas con fecha** (incluidos los **16 feriados nacionales**) y **7 festividades por temporada**, respaldadas por **49 referencias**. Es una selección amplia para planificar reservas; no pretende enumerar cada fiesta de cada distrito del Perú.
 

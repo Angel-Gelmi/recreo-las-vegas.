@@ -1,17 +1,37 @@
 # Las Vegas · Reservas 2027
 
-Calendario de GRAS y Recreo Las Vegas, Ayacucho, Perú. Aplicación estática con Firebase Authentication y Firestore; sin servidor SQL ni backend propio.
+Reservas de GRAS y Recreo Las Vegas, Ayacucho. Aplicación estática con Firebase Authentication y Firestore. La reorganización conserva diseño y comportamiento.
 
-## Versiones
+## Estructura
 
-- `index.html`: núcleo de reservas y autenticación, usado como entrada del generador móvil. `public/index.html`: versión móvil completa generada para producción. `public/` es la única carpeta de despliegue Firebase; ejecutar `npm run build` para actualizarla.
-- `mobile-preview/v1/index.html`: copia histórica conservada, identificada por SHA-256.
-- `mobile-preview/v2/`: versión móvil elegida para producción, con navegación inferior, WhatsApp, PWA y calendario peruano (75 fechas, 16 feriados nacionales y siete temporadas).
-- `mobile-preview/index.html`: comparación con datos de ejemplo. Los demos no usan Firebase real.
+```text
+src/
+  templates/base.html    # Núcleo de reservas, autenticación y plantilla HTML
+  js/mobile.js          # Interfaz móvil y apariencia
+  styles/mobile.css     # Diseño responsive claro/oscuro
+  data/                 # Feriados, festividades y referencias editoriales
+  pwa/                  # Manifiesto, service worker y página sin conexión
+  static/404.html
+assets/
+  images/               # Logos originales y exportación optimizada
+  icons/                # Iconos de instalación
+scripts/                # Build, vista previa y operaciones administrativas
+tests/                  # Regresiones, integración y controles Firebase
+docs/                   # Auditoría, diseño, Firebase y fuentes
+mobile-preview/
+  index.html            # Comparador local
+  demo-sdk.js            # SDK simulado; nunca se publica
+  v1/                   # Versión histórica conservada
+  v2/                   # Generado, excluido de Git
+public/                 # Generado para Firebase, excluido de Git
+backups/                # Respaldos privados, excluidos de Git
+firebase.json
+firestore.rules
+```
 
-## Desarrollo y pruebas
+## Desarrollo
 
-Requisitos: Node.js 22.12 o superior y npm. Python 3 se necesita solo para regenerar la V2 a partir del documento principal; Pillow solo para exportar los iconos/logos, que ya están incluidos.
+Requisitos: Node.js 22.12 o superior, npm y Python 3. Pillow solo se necesita para volver a exportar logos e iconos; los recursos exportados están versionados. El generador de iconos utiliza Arial de Windows.
 
 ```sh
 npm ci
@@ -20,28 +40,25 @@ npm test
 npm run preview
 ```
 
-Comparador local: http://localhost:4173/. `npm test` crea y termina su propio servidor temporal, sin depender de otro servidor abierto.
+`npm test` y `npm run preview` reconstruyen automáticamente los archivos generados. Editar `src/` o `assets/`, nunca `public/` ni `mobile-preview/v2/`. Comparador: http://localhost:4173/. La suite administra su propio servidor temporal.
+
+El build copia recursos explícitos, transforma la plantilla base en la interfaz móvil, genera demos aislados y recalcula los hashes CSP. Las URLs públicas no cambian. V1 se valida por SHA-256. Se conserva la plantilla base completa para evitar cambiar la lógica durante una limpieza estructural.
+
+## Firebase
 
 ```sh
-npm run prepare:preview
-npm run prepare:hosting
 npm run test:rules
 npm run test:firebase
+npm run test:deployment
 node scripts/backup-firestore.cjs
 ```
 
-Los dos controles de Firebase requieren una sesión local válida de Firebase CLI. El primero evalúa reglas con solicitudes simuladas en la API de Firebase; el segundo consulta configuración real y cuentas sin escribir reservas. El backup exporta solo las dos colecciones de reservas a `backups/`, excluido de Git. Ninguna prueba local escribe en producción.
+Requieren una sesión Firebase CLI válida. Las pruebas de reglas simulan solicitudes y los demás controles son de lectura. Los backups contienen información privada y nunca se incluyen en Git ni en Hosting.
 
-## Acceso y datos
+WILMER, CHINO VEGAS y JHOAN administran sus propias reservas; LASVEGAS solo consulta. La configuración web Firebase es pública; contraseñas y credenciales administrativas no pertenecen al repositorio.
 
-WILMER, CHINO VEGAS y JHOAN administran únicamente sus propias reservas. LASVEGAS solo consulta. Las reservas antiguas con responsable `Juan` pertenecen a JHOAN. El 1 de enero queda disponible exclusivamente para administración por Chino.
+`scripts/provision-users.cjs` es una herramienta administrativa manual, no parte del build. Usa `firebase-admin` del entorno local `.test-runtime/`, que se conserva por esa dependencia. No ejecutarlo sin una operación explícita de administración de cuentas. El `jsdom` adicional de ese entorno no lo usa la suite actual; se conserva el entorno completo por precaución.
 
-Las reglas del servidor son la autoridad, aunque alguien modifique el navegador. Los roles proceden de custom claims de Firebase. La configuración web de Firebase es pública; contraseñas, tokens de administración y claves privadas no pertenecen al repositorio.
+Para publicar: ejecutar build, pruebas y Firebase CLI `deploy --project recreolasvegas --only hosting,firestore:rules`. Un push no publica Firebase. Hosting continúa sirviendo `public/`.
 
-Los datos cloud se consultan al iniciar sesión y no se guardan en `localStorage`. Se conserva la clave histórica de reservas locales para evitar borrar registros anteriores. Las transacciones comprueban existencia, responsable, versión original y continuidad de sesión.
-
-## Producción
-
-Ver [FIREBASE.md](FIREBASE.md) para despliegue, cabeceras CSP y respaldos; [AUDIT.md](AUDIT.md) para resultados y límites de verificación; [festividades y fuentes](mobile-preview/FUENTES-FESTIVIDADES.md) para el catálogo 2027.
-
-Un push a GitHub **no ejecuta un despliegue de Firebase**. No se incluyen credenciales de despliegue ni un flujo de publicación automática. El build copia únicamente los archivos de la V2 real: `demo.html` y `demo-sdk.js` nunca deben copiarse a producción.
+Documentación: [Firebase](docs/FIREBASE.md), [auditoría](docs/AUDIT.md), [diseño](docs/DESIGN.md), [limpieza](docs/STRUCTURE.md), [festividades](docs/FUENTES-FESTIVIDADES.md).

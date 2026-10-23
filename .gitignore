@@ -14,3 +14,14 @@ coverage/
 *.pem
 *.key
 mobile-preview/assets/review/
+
+# Reproducible output; edit src/ and assets/, then npm run build.
+/public/
+/mobile-preview/v2/
+/mobile-preview/v1/demo.html
+/mobile-preview/assets/calendario-2027.json
+*.log
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

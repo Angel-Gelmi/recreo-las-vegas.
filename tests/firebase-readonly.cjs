@@ -14,5 +14,5 @@ const os=require('node:os');
  const rules=await get(`https://firebaserules.googleapis.com/v1/${release.rulesetName}`);
  const ruleText=rules.source.files.map(f=>f.content).join('\n');
  console.log(JSON.stringify({roleRulesPublished:ruleText.includes('request.auth.token.reservasRole')}));
- for(const file of ['','logo-las-vegas.png','logo-gras-blanco.png']) {const r=await fetch('https://recreolasvegas.web.app/'+file);console.log('HTTP '+file+' '+r.status);}
+ for(const file of ['','logo-las-vegas.png','logo-gras-app.webp']) {const r=await fetch('https://recreolasvegas.web.app/'+file);console.log('HTTP '+file+' '+r.status);}
 })().catch(e=>{console.error(e.message);process.exitCode=1;});

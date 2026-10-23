@@ -5,6 +5,9 @@
   "description": "Reservas de GRAS y Recreo Las Vegas, Ayacucho, Perú",
   "engines": { "node": ">=22.12.0" },
   "scripts": {
+    "pretest": "npm run build",
+    "pretest:unit": "npm run build",
+    "prepreview": "npm run build",
     "build": "node scripts/build-production.cjs",
     "test": "node scripts/test-all.cjs",
     "test:unit": "node --test tests/reservations.test.cjs tests/festivities.test.cjs tests/security.test.cjs",

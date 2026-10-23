@@ -1,5 +1,5 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),crypto=require('node:crypto');
-const html=fs.readFileSync('index.html','utf8');
+const html=fs.readFileSync('src/templates/base.html','utf8');
 const from=html.indexOf('    function validDateKey('),to=html.indexOf('    try { const saved=',from);
 const ctx=vm.createContext({});vm.runInContext(html.slice(from,to),ctx);
 const booking=()=>({registeredBy:'Wilmer',status:'Confirmado',advance:10,event:'Reserva',notes:'',updatedAt:'2026-10-23T00:00:00.000Z'});
@@ -23,7 +23,7 @@ test('hosting CSP permits exactly the current inline scripts and rejects arbitra
   assert.equal(headers.find(h=>h.key==='X-Content-Type-Options').value,'nosniff');
 });
 test('PWA intercepts only requests within its own scope and does not cache Firebase',()=>{
-  const sw=fs.readFileSync('mobile-preview/v2/sw.js','utf8');
+  const sw=fs.readFileSync('src/pwa/sw.js','utf8');
   assert.match(sw,/self\.registration\.scope/);assert.doesNotMatch(sw,/firebase|password|idToken/);
 });
 
@@ -36,7 +36,7 @@ test('transaction rejects an account change while reading the reservation',async
 
 test('preview service worker does not intercept another same-origin application',()=>{
   const handlers={};let intercepted=false;
-  vm.runInNewContext(fs.readFileSync('mobile-preview/v2/sw.js','utf8'),{URL,self:{registration:{scope:'https://example.com/v2/'},location:{origin:'https://example.com'},addEventListener:(name,handler)=>handlers[name]=handler}});
+  vm.runInNewContext(fs.readFileSync('src/pwa/sw.js','utf8'),{URL,self:{registration:{scope:'https://example.com/v2/'},location:{origin:'https://example.com'},addEventListener:(name,handler)=>handlers[name]=handler}});
   for(const url of ['https://example.com/v1/index.html','https://firestore.googleapis.com/','https://example.com/v2evil/index.html']){
     handlers.fetch({request:{url,method:'GET',mode:'navigate'},respondWith:()=>{intercepted=true;}});
     assert.equal(intercepted,false);

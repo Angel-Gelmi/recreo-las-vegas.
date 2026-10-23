@@ -2,7 +2,7 @@ const {JSDOM}=require('jsdom');
 const fs=require('node:fs');
 const assert=require('node:assert/strict');
 (async()=>{
- const html=fs.readFileSync('index.html','utf8');
+ const html=fs.readFileSync('src/templates/base.html','utf8');
  const dom=new JSDOM(html,{url:'https://test.invalid',runScripts:'outside-only'});
  const w=dom.window,d=w.document;
  w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};
