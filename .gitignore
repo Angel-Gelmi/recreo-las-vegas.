@@ -3,3 +3,14 @@ firebase-debug*.log
 .test-runtime/
 .taste-skill/
 vegas.before-redesign.html
+node_modules/
+.env
+.env.*
+!.env.example
+*service-account*.json
+*serviceAccount*.json
+backups/
+coverage/
+*.pem
+*.key
+mobile-preview/assets/review/

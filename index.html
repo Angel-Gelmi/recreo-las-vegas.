@@ -163,7 +163,7 @@
       <h1>RECREO LAS VEGAS</h1>
       <p>Acceso a reservas 2027</p>
       <form id="login-form">
-        <label>Usuario<input id="login-user" autocomplete="username" placeholder="Tu usuario" required></label>
+        <label>Usuario<input id="login-user" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Tu usuario" required></label>
         <label for="login-password">Contraseña</label>
         <div class="password-field"><input id="login-password" type="password" autocomplete="current-password" required><button id="toggle-password" type="button" class="secondary" aria-controls="login-password" aria-label="Mostrar contraseña" aria-pressed="false">Mostrar</button></div>
         <p id="login-error" class="error" role="alert" hidden></p>
@@ -201,18 +201,18 @@
       <aside>
         <section class="rail" aria-labelledby="agenda-title"><div class="rail-head"><h2 id="agenda-title">Agenda del mes</h2><span id="agenda-count" class="small num">0 reservas</span></div><p id="agenda-scope">GRAS · Enero 2027</p><input id="search" class="search" type="search" placeholder="Buscar evento o responsable" aria-label="Buscar en la agenda del mes"><div id="agenda" class="agenda"></div></section>
         <p class="storage-note" id="storage-note">Preparando las reservas…</p>
-        <div class="access-setup" id="access-setup" hidden><p>Este navegador aún no tiene permiso para acceder a las reservas.</p><button class="secondary" id="prepare-access">Configurar mi acceso</button></div>
       </aside>
     </div>
-    <footer><span>Recreo Las Vegas · Gestión de reservas 2027</span><span>1 de enero · Reserva protegida de Chino en ambas sedes.</span></footer>
+    <footer><span>Recreo Las Vegas · Gestión de reservas 2027</span><span>1 de enero · Reserva administrada por Chino en ambas sedes.</span></footer>
     <noscript>Activa JavaScript para consultar y registrar reservas.</noscript>
   </main>
   <dialog id="reservation-modal" aria-labelledby="modal-date-title">
     <div class="modal-head"><div><h2 id="modal-date-title">Nueva reserva</h2><p id="modal-date-subtitle"></p></div><button id="close-modal" class="icon-button" aria-label="Cerrar reserva">×</button></div>
     <p id="chino-notice" class="notice" hidden>Reserva protegida de Chino. Comunícate directamente con Chino para solicitar cambios.</p>
+    <p id="owner-contact" class="notice" hidden><a id="owner-whatsapp" target="_blank" rel="noopener noreferrer"></a></p>
     <form id="reservation-form">
       <label>Fecha<input type="date" id="res-date" min="2027-01-01" max="2027-12-31" required></label>
-      <div class="fields"><label>Registrado por<select id="res-registered-by" required><option>Wilmer</option><option>Juan</option><option>Chino</option><option>Jhoan</option></select></label><label>Estado<select id="res-status" required><option>Confirmado</option><option>Pendiente</option></select></label></div>
+      <div class="fields"><label>Registrado por<input id="res-registered-by" type="text" readonly aria-readonly="true"></label><label>Estado<select id="res-status" required><option>Confirmado</option><option>Pendiente</option></select></label></div>
       <label>Evento<input id="res-event" type="text" required maxlength="120" placeholder="Ej. Campeonato o cumpleaños"></label>
       <label>Adelanto (S/)<input id="res-advance" type="number" inputmode="decimal" min="0" max="999999999" step="0.01" placeholder="0.00"></label>
       <label>Nota u observación<textarea id="res-notes" rows="2" maxlength="2000" placeholder="Detalles de la reserva"></textarea></label>
@@ -223,49 +223,6 @@
   </dialog>
   </div><!-- /app-shell -->
   <div id="toast" role="status" aria-live="polite" hidden></div>
-  <dialog id="access-dialog" aria-labelledby="access-title">
-    <div class="modal-head"><h2 id="access-title">Autorizar este navegador</h2><button type="button" id="close-access" class="icon-button" aria-label="Cerrar configuración">×</button></div>
-    <p>Para la primera configuración: copia estas reglas y publícalas en Firebase → Firestore → Reglas. Después, recarga la app.</p>
-    <p class="storage-note">Permiten consultar, crear, editar y eliminar reservas desde este navegador. Otros dispositivos siguen bloqueados. Si ya autorizaste otros navegadores, conserva también sus identificadores en la lista de las reglas.</p>
-    <label class="storage-note">Identificador de este navegador<input id="device-id" readonly></label>
-    <textarea id="access-rules" readonly spellcheck="false" aria-label="Reglas de Firestore para este navegador"></textarea>
-    <button id="copy-access-rules" class="primary">Copiar reglas</button>
-    <p id="copy-access-status" class="storage-note" role="status"></p>
-  </dialog>
-  <script type="text/plain" id="rules-template">
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    function authorized() {
-      return request.auth != null
-        && request.auth.uid in ['REPLACE_WITH_DEVICE_UID'];
-    }
-    function validReservation() {
-      let r = request.resource.data;
-      return r.keys().hasAll(['registeredBy', 'status', 'advance', 'event', 'notes', 'updatedAt'])
-        && r.keys().hasOnly(['registeredBy', 'status', 'advance', 'event', 'notes', 'updatedAt'])
-        && r.registeredBy in ['Wilmer', 'Juan', 'Chino']
-        && r.status in ['Confirmado', 'Pendiente']
-        && r.advance is number && r.advance >= 0 && r.advance <= 999999999
-        && r.event is string && r.event.size() > 0 && r.event.size() <= 120
-        && r.notes is string && r.notes.size() <= 2000
-        && r.updatedAt is string && r.updatedAt.size() <= 40;
-    }
-    match /artifacts/calendario-2027-reservas-app-v2/public/data/{venue}/{date} {
-      function allowedVenue() {
-        return venue in ['reservations_gras_2027_v2', 'reservations_recreo_2027_v2'];
-      }
-      function editableDate() {
-        return date != '2027-01-01'
-          && date.matches('^2027-((01|03|05|07|08|10|12)-(0[1-9]|[12][0-9]|3[01])|(04|06|09|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))$');
-      }
-      allow read: if authorized() && allowedVenue();
-      allow create, update: if authorized() && allowedVenue() && editableDate() && validReservation();
-      allow delete: if authorized() && allowedVenue() && editableDate();
-    }
-  }
-}
-  </script>
   <script>
     'use strict';
     const $ = id => document.getElementById(id);
@@ -288,7 +245,20 @@ service cloud.firestore {
     };
     let sessionRole=null, sessionGeneration=0;
     let authClient = null, authSDKClient = null, stopCloudListeners = [];
-    let editVersion=null;
+    let editVersion=null, editOwner=null;
+    function accountOwner() {
+      return ({'wilmer@recreolasvegas.web.app':'Wilmer','chino@recreolasvegas.web.app':'Chino','jhoan@recreolasvegas.web.app':'Jhoan'})[authClient?.currentUser?.email] || '';
+    }
+    const OWNER_CONTACTS={Wilmer:{phone:'51981842122',label:'+51 981 842 122'},Chino:{phone:'51975788880',label:'+51 975 788 880'},Jhoan:{phone:'51966858553',label:'+51 966 858 553'}};
+    function ownerContactLink(owner,date,site) {
+      const name=owner==='Juan'?'Jhoan':owner,contact=OWNER_CONTACTS[name];
+      if(!contact)return null;
+      const message=`Hola ${name}, soy ${accountOwner()||'un usuario de Las Vegas'}. Te escribo sobre tu reserva del ${date.split('-').reverse().join('/')} en ${site.toUpperCase()}. Quisiera coordinar contigo el estado de la reserva, los pagos o un posible cambio. Me confirmas, por favor.`;
+      return {name,label:contact.label,url:`https://wa.me/${contact.phone}?text=${encodeURIComponent(message)}`};
+    }
+    function ownsReservation(r) {
+      return !!accountOwner() && (r.registeredBy===accountOwner() || (accountOwner()==='Jhoan' && r.registeredBy==='Juan'));
+    }
     function reservationVersion(r) {
       return JSON.stringify([r.event||'',r.registeredBy||'Wilmer',r.status==='Pendiente'?'Pendiente':'Confirmado',Number(r.advance)||0,r.notes||'',r.updatedAt||'']);
     }
@@ -323,36 +293,39 @@ service cloud.firestore {
     const localStorageKey = 'vegas-reservas-2027:' + appId;
     let storageKey = localStorageKey;
     const money = value => 'S/ ' + Number(value || 0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2});
-    const defaultReservation = () => ({registeredBy:'Chino',status:'Confirmado',advance:0,event:'Reserva Especial Protegida',notes:'Reservado por Chino. Comunícate directamente con Chino.',isDefaultChino:true});
     let stores = {gras:{},recreo:{}}, venue='gras', month=0, editVenue='gras', editKey=null, busy=false, cloud=null, cloudReady={gras:false,recreo:false}, toastTimer, storageIssue=false;
     const modal = $('reservation-modal');
-    let deviceUid = null;
-    $('prepare-access').addEventListener('click',()=>{
-      if(!deviceUid)return;
-      $('device-id').value=deviceUid;
-      $('access-rules').value=$('rules-template').textContent.trim().replace("'REPLACE_WITH_DEVICE_UID'",JSON.stringify(deviceUid));
-      $('copy-access-status').textContent=''; $('access-dialog').showModal();
-    });
-    $('close-access').addEventListener('click',()=>$('access-dialog').close());
-    $('copy-access-rules').addEventListener('click',async()=>{
-      try { await navigator.clipboard.writeText($('access-rules').value); $('copy-access-status').textContent='Reglas copiadas. Pégalas en Firebase y pulsa Publicar.'; }
-      catch { $('access-rules').focus(); $('access-rules').select(); $('copy-access-status').textContent='Texto seleccionado. Usa Ctrl+C o la opción Copiar de tu dispositivo.'; }
-    });
+    function validDateKey(key) {
+      if(typeof key!=='string'||!/^2027-\d{2}-\d{2}$/.test(key))return false;
+      const date=new Date(key+'T12:00:00Z');
+      return !Number.isNaN(date.getTime())&&date.toISOString().slice(0,10)===key;
+    }
+    function validateReservation(key,data) {
+      if(!validDateKey(key))throw new Error('Elige una fecha válida de 2027.');
+      if(data===null)return;
+      if(!data||typeof data.event!=='string'||!data.event.trim()||data.event.length>120)throw new Error('El evento debe tener entre 1 y 120 caracteres.');
+      if(typeof data.advance!=='number'||!Number.isFinite(data.advance)||data.advance<0||data.advance>999999999)throw new Error('El adelanto debe estar entre S/ 0 y S/ 999999999.');
+      if(!['Confirmado','Pendiente'].includes(data.status))throw new Error('Selecciona un estado válido.');
+      if(typeof data.notes!=='string'||data.notes.length>2000)throw new Error('La nota admite hasta 2000 caracteres.');
+      if(!['Wilmer','Chino','Jhoan','Juan'].includes(data.registeredBy))throw new Error('El responsable de la reserva no es válido.');
+      if(typeof data.updatedAt!=='string'||data.updatedAt.length>40)throw new Error('No se pudo preparar la reserva. Vuelve a abrirla.');
+    }
     function validStore(value) { return value && typeof value==='object' && !Array.isArray(value); }
     function normalizeStore(value) {
       const result={};
       if(validStore(value)) for(const [key,r] of Object.entries(value)) {
-        if(!/^2027-\d{2}-\d{2}$/.test(key) || !validStore(r)) continue;
-        const date=new Date(key+'T12:00:00Z'); if(Number.isNaN(date.getTime()) || date.toISOString().slice(0,10)!==key) continue;
+        if(!validDateKey(key) || !validStore(r)) continue;
         result[key]={...r,event:String(r.event || ''),registeredBy:String(r.registeredBy || 'Wilmer'),notes:String(r.notes || ''),status:r.status==='Pendiente'?'Pendiente':'Confirmado',advance:Number.isFinite(Number(r.advance))?Math.max(0,Number(r.advance)):0};
       }
-      result[special] ||= defaultReservation(); return result;
+      return result;
     }
     try { const saved=JSON.parse(localStorage.getItem(storageKey)); if(saved) { stores.gras=normalizeStore(saved.gras); stores.recreo=normalizeStore(saved.recreo); } } catch { storageIssue=true; }
     for(const v of ['gras','recreo']) stores[v]=normalizeStore(stores[v]);
     function toast(message) { clearTimeout(toastTimer); $('toast').textContent=message; $('toast').hidden=false; toastTimer=setTimeout(()=>$('toast').hidden=true,4500); }
     function connection(text,state,note) { $('sync-status').textContent=text; $('sync-status').dataset.state=state; $('sync-status').title=note; $('storage-note').textContent=note; $('reconnect').hidden=state!=='error'; }
-    function persist(candidate) { localStorage.setItem(storageKey,JSON.stringify(candidate)); }
+    function persist(candidate) {
+      if(!cloud || window.__PREVIEW__) localStorage.setItem(storageKey,JSON.stringify(candidate));
+    }
     function entries() { const prefix=`2027-${String(month+1).padStart(2,'0')}-`; return Object.entries(stores[venue]).filter(([k])=>k.startsWith(prefix)).sort(([a],[b])=>a.localeCompare(b)); }
     function renderAgenda() {
       const query=$('search').value.toLocaleLowerCase('es').trim();
@@ -364,14 +337,14 @@ service cloud.firestore {
         const copy=document.createElement('span'); copy.className='agenda-copy';
         const title=document.createElement('span'); title.className='agenda-name'; title.textContent=r.event;
         const meta=document.createElement('span'); meta.className='agenda-meta num'; meta.textContent=`${r.registeredBy} · ${money(r.advance)}`;
-        const status=document.createElement('span'); status.className='agenda-status'; const dot=document.createElement('i'); dot.className='dot'+(r.status==='Pendiente'?' pending':''); status.append(dot,document.createTextNode(key===special?'Protegida · Chino':r.status));
+        const status=document.createElement('span'); status.className='agenda-status'; const dot=document.createElement('i'); dot.className='dot'+(r.status==='Pendiente'?' pending':''); status.append(dot,document.createTextNode(r.status));
         copy.append(title,meta,status); row.append(date,copy); row.addEventListener('click',()=>openModal(key)); $('agenda').append(row);
       }
       if(!rows.length) { const empty=document.createElement('p'); empty.className='empty'; empty.textContent=query?'No hay reservas que coincidan con tu búsqueda.':'Sin reservas este mes. Selecciona una fecha para registrar la primera.'; $('agenda').append(empty); }
     }
     function render() {
       $('brand-logo').classList.toggle('gras-logo',venue==='gras');
-      $('brand-image').src=venue==='gras'?'logo-gras-blanco.png':'logo-las-vegas.png';
+      $('brand-image').src=venue==='gras'?'logo-gras-app.webp':'logo-las-vegas.png';
       $('brand-image').alt=venue==='gras'?'GRAS Las Vegas':'Recreo Las Vegas · Ayacucho, Perú';
       $('current-month-label').textContent=`${months[month]} 2027`; $('agenda-scope').textContent=`${venue.toUpperCase()} · ${months[month]} 2027`; $('month-select').value=month;
       $('prev-month').disabled=month===0; $('next-month').disabled=month===11;
@@ -380,7 +353,7 @@ service cloud.firestore {
       $('stat-free').textContent=total-rows.length; $('stat-reserved').textContent=rows.length; $('stat-pending').textContent=rows.filter(([,r])=>r.status==='Pendiente').length;
       $('stat-advance').textContent=money(rows.reduce((sum,[,r])=>sum+Math.round(r.advance*100),0)/100);
       $('calendar-days').replaceChildren();
-      const today=new Date().toLocaleDateString('en-CA');
+      const today=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Lima',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
       for(let i=0;i<Math.ceil((offset+total)/7)*7;i++) {
         const day=i-offset+1, active=day>0&&day<=total;
         const cell=document.createElement(active?'button':'div'); cell.className='day'+(active?'':' inactive');
@@ -400,15 +373,30 @@ service cloud.firestore {
     function openModal(key=null) {
       editVenue=venue; const r=key?stores[venue][key]:null, protectedDay=key===special;
       if(sessionRole!=='admin'&&!r)return;
-      const readOnly=protectedDay||sessionRole!=='admin';
-      editKey=r?key:null; editVersion=r?reservationVersion(r):null;
+      const readOnly=(protectedDay&&accountOwner()!=='Chino')||sessionRole!=='admin'||(!!r&&!ownsReservation(r));
+      editKey=r?key:null; editVersion=r?reservationVersion(r):null; editOwner=r?.registeredBy||accountOwner();
       $('reservation-form').reset(); formError(''); $('delete-confirm').hidden=true;
-      $('modal-date-title').textContent=protectedDay?'Reserva protegida':readOnly?'Consultar reserva':r?'Editar reserva':'Nueva reserva'; $('modal-date-subtitle').textContent=`Sede ${venue.toUpperCase()} · 2027`;
+      $('modal-date-title').textContent=readOnly?'Consultar reserva':r?'Editar reserva':'Nueva reserva'; $('modal-date-subtitle').textContent=`Sede ${venue.toUpperCase()} · 2027`;
       $('res-date').value=key||''; $('res-date').disabled=!!key;
       for(const [id,field,fallback] of [['res-registered-by','registeredBy','Wilmer'],['res-status','status','Confirmado'],['res-event','event',''],['res-advance','advance',''],['res-notes','notes','']]) { $(id).value=r?.[field]??fallback; $(id).disabled=readOnly; }
-      $('chino-notice').hidden=!protectedDay; $('btn-save').hidden=readOnly; $('btn-delete').hidden=!r||readOnly;
-      if(!r) $('res-registered-by').value=({'WILMER':'Wilmer','CHINO VEGAS':'Chino','JHOAN':'Jhoan'})[authClient?.currentUser?.displayName]||'Wilmer';
-      modal.showModal(); document.body.style.overflow='hidden'; (protectedDay?$('close-modal'):key?$('res-event'):$('res-date')).focus();
+      $('chino-notice').hidden=!protectedDay||!readOnly; $('btn-save').hidden=readOnly; $('btn-delete').hidden=!r||readOnly;
+      $('res-registered-by').value=r?.registeredBy||accountOwner();
+      $('res-registered-by').disabled=true;
+      if(r && readOnly) {
+        $('chino-notice').hidden=false;
+        $('chino-notice').textContent=`Reserva de ${r.registeredBy}. Comunícate con ${r.registeredBy} para editarla o eliminarla.`;
+      } else {
+        $('chino-notice').textContent='Reserva protegida de Chino. Comunícate directamente con Chino para solicitar cambios.';
+      }
+      const contact=r&&!ownsReservation(r)?ownerContactLink(r.registeredBy,key,venue):null;
+      $('owner-contact').hidden=!contact;
+      $('owner-whatsapp').removeAttribute('href');
+      $('owner-whatsapp').textContent='';
+      if(contact) {
+        $('owner-whatsapp').href=contact.url;
+        $('owner-whatsapp').textContent=`Contactar a ${contact.name} por WhatsApp: ${contact.label}`;
+      }
+      modal.showModal(); document.body.style.overflow='hidden'; (readOnly?$('close-modal'):key?$('res-event'):$('res-date')).focus();
     }
     function closeModal() { if(!busy) modal.close(); }
     modal.addEventListener('close',()=>document.body.style.overflow='');
@@ -416,11 +404,13 @@ service cloud.firestore {
     modal.addEventListener('click',e=>{const r=modal.getBoundingClientRect(); if(e.target===modal&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))closeModal();});
     function setBusy(value) { busy=value; for(const id of ['btn-save','btn-delete','confirm-delete','cancel-delete','close-modal','cancel-modal']) $(id).disabled=value; $('btn-save').textContent=value?'Guardando…':'Guardar reserva'; }
     async function commit(key,data) {
-      if(key===special) throw new Error('El 1 de enero está protegido. Comunícate con Chino.');
+      if(key===special&&accountOwner()!=='Chino') throw new Error('El 1 de enero está protegido. Comunícate con Chino.');
       if(sessionRole!=='admin') throw new Error('Tu usuario solo puede consultar reservas.');
       if(!cloud) throw new Error('Inicia sesión y espera a que las reservas estén sincronizadas.');
-      const target=editVenue;
+      const target=editVenue, generation=sessionGeneration;
+      if(cloudReady[target])validateReservation(key,data);
       if(cloud) { if(!cloudReady[target])throw new Error('Espera a que se carguen las reservas de esta sede.'); await cloud.write(target,key,data); }
+      if(generation!==sessionGeneration||!cloud)throw new Error('La sesión cambió durante el guardado. Vuelve a consultar la reserva.');
       const candidate={...stores,[target]:{...stores[target]}}; if(data)candidate[target][key]=data; else delete candidate[target][key];
       try { persist(candidate); } catch { if(!cloud)throw new Error('No se pudo guardar en este navegador. Revisa el espacio disponible y los permisos de almacenamiento.'); toast('Guardado en la nube. No se pudo actualizar la copia local.'); }
       stores=candidate; render();
@@ -430,7 +420,8 @@ service cloud.firestore {
       const key=editKey||$('res-date').value, event=$('res-event').value.trim(), advance=Number($('res-advance').value||0);
       if(!/^2027-\d{2}-\d{2}$/.test(key)||!event||!Number.isFinite(advance)||advance<0) { formError('Completa una fecha de 2027, un evento y un adelanto válido.'); return; }
       if(!editKey&&stores[editVenue][key]) { formError('Esta fecha ya tiene una reserva. Ábrela desde el calendario para editarla.'); return; }
-      const data={registeredBy:$('res-registered-by').value,status:$('res-status').value,advance:Math.round(advance*100)/100,event,notes:$('res-notes').value.trim(),updatedAt:new Date().toISOString()};
+      const data={registeredBy:editKey?editOwner:accountOwner(),status:$('res-status').value,advance:Math.round(advance*100)/100,event,notes:$('res-notes').value.trim(),updatedAt:new Date().toISOString()};
+      try { validateReservation(key,data); } catch(err) { formError(err.message); return; }
       setBusy(true); try { await commit(key,data); month=Number(key.slice(5,7))-1; render(); setBusy(false); closeModal(); toast(cloud?'Reserva guardada y sincronizada.':'Reserva guardada en este navegador.'); } catch(err) { formError(err.message||'No se pudo guardar. Inténtalo de nuevo.'); } finally { setBusy(false); }
     });
     $('btn-delete').addEventListener('click',()=>{$('delete-confirm').hidden=false;$('cancel-delete').focus();});
@@ -470,7 +461,9 @@ service cloud.firestore {
         if(auth.currentUser?.isAnonymous) await authSDK.signOut(auth);
         const path=v=>['artifacts',appId,'public','data',`reservations_${v}_2027_v2`];
 
+        let listenerGeneration=0;
         function stopListeners() {
+          listenerGeneration++;
           stopCloudListeners.forEach(stop=>stop());
           stopCloudListeners=[];
           cloud=null;
@@ -479,6 +472,8 @@ service cloud.firestore {
         function startSession() {
           stopListeners();
           storageKey=`${localStorageKey}:cloud:${config.projectId}`;
+          const listenerId=listenerGeneration;
+          try { localStorage.removeItem(storageKey); } catch { /* Cloud use does not require local storage. */ }
           stores={gras:normalizeStore({}),recreo:normalizeStore({})};
           showApplication();
           $('new-reservation').disabled=true;
@@ -488,11 +483,16 @@ service cloud.firestore {
             if(!auth.currentUser || auth.currentUser.isAnonymous) throw new Error('Debes iniciar sesión.');
             if(sessionRole!=='admin') throw new Error('Tu usuario solo puede consultar reservas.');
             const ref=fs.doc(db,...path(v),key);
+            const expectedGeneration=sessionGeneration, expectedUid=auth.currentUser.uid;
+            const originalEditKey=editKey, originalVersion=editVersion, originalOwner=accountOwner();
             try {
               await fs.runTransaction(db,async transaction=>{
                 const existing=await transaction.get(ref);
-                if(data&&!editKey&&existing.exists()) throw new Error('Esta fecha acaba de reservarse en otro dispositivo. Cierra el formulario y revisa el calendario.');
-                if(editKey&&(!existing.exists()||reservationVersion(existing.data())!==editVersion)) throw new Error('Esta reserva cambió en otro dispositivo. Cierra el formulario y vuelve a abrirla antes de guardar o eliminar.');
+                if(expectedGeneration!==sessionGeneration||expectedUid!==auth.currentUser?.uid)throw new Error('La sesión cambió. Vuelve a iniciar sesión.');
+                if(data&&!originalEditKey&&existing.exists()) throw new Error('Esta fecha acaba de reservarse en otro dispositivo. Cierra el formulario y revisa el calendario.');
+                if(originalEditKey&&(!existing.exists()||reservationVersion(existing.data())!==originalVersion)) throw new Error('Esta reserva cambió en otro dispositivo. Cierra el formulario y vuelve a abrirla antes de guardar o eliminar.');
+                if(existing.exists()&&!ownsReservation(existing.data())) throw new Error(`Comunícate con ${existing.data().registeredBy} para editar o eliminar esta reserva.`);
+                if(data && data.registeredBy!==(existing.exists()?existing.data().registeredBy:originalOwner)) throw new Error('El responsable de la reserva no se puede cambiar.');
                 if(data)transaction.set(ref,data);else transaction.delete(ref);
               });
             } catch(error) { if(error.code)throw new Error(firebaseError(error));throw error; }
@@ -500,7 +500,6 @@ service cloud.firestore {
           const errors={gras:null,recreo:null};
           function updateConnection() {
             const error=errors.gras||errors.recreo;
-            $('access-setup').hidden=true;
             if(error) connection(error.code==='permission-denied'?'Actualizar acceso':'Revisar conexión','error',firebaseError(error));
             else if(cloudReady.gras&&cloudReady.recreo) connection('Sincronizado','cloud',sessionRole==='viewer'?'Acceso de consulta. Puedes ver las reservas de ambas sedes.':'Acceso de administrador. Los cambios se guardan en la nube.');
             else connection('Esperando conexión','local','Esperando los datos de Firebase. No guardes reservas hasta que esté sincronizado.');
@@ -509,11 +508,12 @@ service cloud.firestore {
           }
           for(const v of ['gras','recreo']) {
             const stop=fs.onSnapshot(fs.collection(db,...path(v)),{includeMetadataChanges:true},snapshot=>{
+              if(listenerId!==listenerGeneration)return;
               const fresh={}; snapshot.forEach(d=>fresh[d.id]=d.data());
               stores[v]=normalizeStore(fresh);
-              cloudReady[v]=!snapshot.metadata.fromCache;
+              cloudReady[v]=!snapshot.metadata.fromCache&&navigator.onLine;
               errors[v]=null; updateConnection(); render();
-            },error=>{cloudReady[v]=false;errors[v]=error;updateConnection();});
+            },error=>{if(listenerId!==listenerGeneration)return;cloudReady[v]=false;errors[v]=error;updateConnection();render();});
             stopCloudListeners.push(stop);
           }
         }
@@ -539,7 +539,9 @@ service cloud.firestore {
           $('reconnect').disabled=true;
           try {
             if(!auth.currentUser) { showLogin('Vuelve a iniciar sesión.'); return; }
-            const token=await authSDK.getIdTokenResult(auth.currentUser,true);
+            const reconnectUser=auth.currentUser, reconnectGeneration=sessionGeneration;
+            const token=await authSDK.getIdTokenResult(reconnectUser,true);
+            if(reconnectGeneration!==sessionGeneration||auth.currentUser!==reconnectUser)return;
             if(!['admin','viewer'].includes(token.claims.reservasRole)) { await authSDK.signOut(auth); showLogin('Inicia sesión con uno de los nuevos usuarios.'); return; }
             sessionRole=token.claims.reservasRole; startSession();
           } catch(error) { connection('Revisar conexión','error',firebaseError(error)); }
@@ -564,10 +566,12 @@ service cloud.firestore {
           } finally { $('login-submit').disabled=false; }
         });
         $('logout').addEventListener('click',async()=>{
-          stopListeners();
-          await authSDK.signOut(auth);
-          stores={gras:normalizeStore({}),recreo:normalizeStore({})};
-          showLogin('');
+          if(busy){toast('Espera a que termine el guardado antes de cerrar sesión.');return;}
+          stopListeners();sessionGeneration++;sessionRole=null;
+          stores={gras:normalizeStore({}),recreo:normalizeStore({})};render();showLogin('');
+          try { await authSDK.signOut(auth); }
+          catch { showLogin('No se pudo cerrar la sesión del dispositivo. Revisa la conexión y vuelve a intentarlo.'); }
+
         });
       } catch(error) { showLogin(firebaseError(error)); }
     }

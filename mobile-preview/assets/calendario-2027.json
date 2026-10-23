@@ -1,0 +1,1089 @@
+{
+  "meta": {
+    "year": 2027,
+    "reviewed": "2026-10-23",
+    "nationalHolidays": 16,
+    "datedEvents": 75,
+    "seasonalEvents": 7,
+    "sources": 49
+  },
+  "days": {
+    "2027-01-01": [
+      {
+        "name": "Año Nuevo",
+        "kind": "Feriado nacional",
+        "short": "Año Nuevo",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      },
+      {
+        "name": "Huaylías y danzas navideñas",
+        "category": "ayacucho",
+        "place": "Huamanga y Huanca Sancos",
+        "sourceId": "navidad",
+        "short": "Huaylías",
+        "note": "Tradiciones de Navidad, Año Nuevo y Reyes. El programa de cada comunidad puede variar.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-05-01": [
+      {
+        "name": "Día del Trabajo",
+        "kind": "Feriado nacional",
+        "short": "Día del Trabajo",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      },
+      {
+        "name": "Virgen de Chapi",
+        "category": "peru",
+        "place": "Arequipa",
+        "sourceId": "chapi",
+        "short": "V. Chapi",
+        "note": "Día tradicional. Programa local de 2027 por confirmar; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-06-07": [
+      {
+        "name": "Batalla de Arica y Día de la Bandera",
+        "kind": "Feriado nacional",
+        "short": "Día Bandera",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      }
+    ],
+    "2027-06-29": [
+      {
+        "name": "San Pedro y San Pablo",
+        "kind": "Feriado nacional",
+        "short": "S. Pedro y Pablo",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      }
+    ],
+    "2027-07-23": [
+      {
+        "name": "Día de la Fuerza Aérea del Perú",
+        "kind": "Feriado nacional",
+        "short": "Día FAP",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      }
+    ],
+    "2027-07-28": [
+      {
+        "name": "Fiestas Patrias",
+        "kind": "Feriado nacional",
+        "short": "Fiestas Patrias",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      },
+      {
+        "name": "Vilcas Raymi",
+        "category": "ayacucho",
+        "place": "Vilcashuamán",
+        "sourceId": "vilcas",
+        "short": "Vilcas",
+        "note": "Referencia al cierre tradicional de julio. El rango y programa oficial de 2027 están por confirmar.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-07-29": [
+      {
+        "name": "Fiestas Patrias",
+        "kind": "Feriado nacional",
+        "short": "Fiestas Patrias",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      }
+    ],
+    "2027-08-06": [
+      {
+        "name": "Batalla de Junín",
+        "kind": "Feriado nacional",
+        "short": "Batalla de Junín",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      }
+    ],
+    "2027-08-30": [
+      {
+        "name": "Santa Rosa de Lima",
+        "kind": "Feriado nacional",
+        "short": "Santa Rosa",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      }
+    ],
+    "2027-10-08": [
+      {
+        "name": "Combate de Angamos",
+        "kind": "Feriado nacional",
+        "short": "Combate de Angamos",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      }
+    ],
+    "2027-11-01": [
+      {
+        "name": "Día de Todos los Santos",
+        "kind": "Feriado nacional",
+        "short": "Todos Santos",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      }
+    ],
+    "2027-12-08": [
+      {
+        "name": "Inmaculada Concepción",
+        "kind": "Feriado nacional",
+        "short": "Inmac.",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      }
+    ],
+    "2027-12-09": [
+      {
+        "name": "Batalla de Ayacucho",
+        "kind": "Feriado nacional",
+        "short": "B. Ayac.",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      }
+    ],
+    "2027-12-25": [
+      {
+        "name": "Navidad",
+        "kind": "Feriado nacional",
+        "short": "Navidad",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      },
+      {
+        "name": "Huaylías y danzas navideñas",
+        "category": "ayacucho",
+        "place": "Huamanga y Huanca Sancos",
+        "sourceId": "navidad",
+        "short": "Huaylías",
+        "note": "Tradiciones de Navidad, Año Nuevo y Reyes. El programa de cada comunidad puede variar.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-03-21": [
+      {
+        "name": "Domingo de Ramos",
+        "kind": "Celebración · Ayacucho",
+        "short": "Domingo de Ramos",
+        "category": "ayacucho",
+        "sourceId": "semana",
+        "place": "Ayacucho",
+        "note": "Fecha litúrgica calculada para 2027. El programa local de procesiones y horarios está por confirmar."
+      }
+    ],
+    "2027-03-25": [
+      {
+        "name": "Jueves Santo",
+        "kind": "Feriado nacional",
+        "short": "Jueves Santo",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      }
+    ],
+    "2027-03-26": [
+      {
+        "name": "Viernes Santo",
+        "kind": "Feriado nacional",
+        "short": "Viernes Santo",
+        "category": "feriado",
+        "sourceId": "feriados",
+        "place": "Todo el Perú",
+        "note": "Según normativa vigente consultada; revisar futuros decretos de 2027."
+      }
+    ],
+    "2027-03-27": [
+      {
+        "name": "Sábado Santo",
+        "kind": "Celebración · Ayacucho",
+        "short": "Sábado Santo",
+        "category": "ayacucho",
+        "sourceId": "semana",
+        "place": "Ayacucho",
+        "note": "Fecha litúrgica calculada para 2027. El programa local de procesiones y horarios está por confirmar."
+      }
+    ],
+    "2027-03-28": [
+      {
+        "name": "Domingo de Resurrección",
+        "kind": "Celebración · Ayacucho",
+        "short": "Pascua",
+        "category": "ayacucho",
+        "sourceId": "semana",
+        "place": "Ayacucho",
+        "note": "Fecha litúrgica calculada para 2027. El programa local de procesiones y horarios está por confirmar."
+      }
+    ],
+    "2027-02-14": [
+      {
+        "name": "Día del Amor y la Amistad",
+        "kind": "Celebración",
+        "short": "Amistad",
+        "category": "peru",
+        "sourceId": "amor",
+        "place": "Perú",
+        "note": "Celebración; no implica feriado nacional."
+      }
+    ],
+    "2027-04-25": [
+      {
+        "name": "Aniversario de Huamanga",
+        "kind": "Aniversario · Ayacucho",
+        "short": "Aniv. Hga.",
+        "category": "ayacucho",
+        "sourceId": "huamanga",
+        "place": "Huamanga",
+        "note": "El aniversario es anual. El decreto enlazado corresponde a 2025 y no confirma descanso laboral para 2027."
+      }
+    ],
+    "2027-05-09": [
+      {
+        "name": "Día de la Madre",
+        "kind": "Celebración",
+        "short": "Día de la Madre",
+        "category": "peru",
+        "sourceId": "madre",
+        "place": "Perú",
+        "note": "Celebración; no implica feriado nacional."
+      }
+    ],
+    "2027-06-20": [
+      {
+        "name": "Día del Padre",
+        "kind": "Celebración",
+        "short": "Día del Padre",
+        "category": "peru",
+        "sourceId": "padre",
+        "place": "Perú",
+        "note": "Celebración; no implica feriado nacional."
+      }
+    ],
+    "2027-06-24": [
+      {
+        "name": "Festival de la Vicuña y Chaccu Nacional",
+        "category": "ayacucho",
+        "place": "Lucanas · entorno de Pampa Galeras",
+        "sourceId": "chaccu",
+        "short": "Chaccu",
+        "note": "Día tradicional; programa local de 2027 por confirmar.",
+        "kind": "Celebración · Ayacucho"
+      },
+      {
+        "name": "San Juan",
+        "kind": "Celebración",
+        "short": "San Juan",
+        "category": "peru",
+        "sourceId": "sanjuan",
+        "place": "Amazonía peruana",
+        "note": "Celebración; no implica feriado nacional."
+      },
+      {
+        "name": "Inti Raymi",
+        "category": "peru",
+        "place": "Cusco",
+        "sourceId": "inti",
+        "short": "Inti Raymi",
+        "note": "Celebración; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      },
+      {
+        "name": "Día del Campesino",
+        "category": "peru",
+        "place": "Perú",
+        "sourceId": "ambiente",
+        "short": "Campesino",
+        "note": "Celebración; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-10-31": [
+      {
+        "name": "Día de la Canción Criolla",
+        "kind": "Celebración",
+        "short": "Canción Criolla",
+        "category": "peru",
+        "sourceId": "criolla",
+        "place": "Perú",
+        "note": "Celebración; no implica feriado nacional."
+      },
+      {
+        "name": "Halloween",
+        "category": "peru",
+        "place": "Celebración popular en Perú",
+        "sourceId": "criolla",
+        "short": "Halloween",
+        "note": "Celebración; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-11-02": [
+      {
+        "name": "Día de los Difuntos",
+        "kind": "Celebración",
+        "short": "Difuntos",
+        "category": "peru",
+        "sourceId": "difuntos",
+        "place": "Perú",
+        "note": "Celebración; no implica feriado nacional."
+      }
+    ],
+    "2027-12-24": [
+      {
+        "name": "Nochebuena",
+        "kind": "Celebración",
+        "short": "Noche buena",
+        "category": "peru",
+        "sourceId": "nochebuena",
+        "place": "Perú",
+        "note": "Celebración; no implica feriado nacional."
+      }
+    ],
+    "2027-12-31": [
+      {
+        "name": "Fin de año",
+        "kind": "Celebración",
+        "short": "Fin de año",
+        "category": "peru",
+        "sourceId": "fin",
+        "place": "Perú",
+        "note": "Celebración; no implica feriado nacional."
+      }
+    ],
+    "2027-01-06": [
+      {
+        "name": "Huaylías y danzas navideñas",
+        "category": "ayacucho",
+        "place": "Huamanga y Huanca Sancos",
+        "sourceId": "navidad",
+        "short": "Huaylías",
+        "note": "Tradiciones de Navidad, Año Nuevo y Reyes. El programa de cada comunidad puede variar.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-01-26": [
+      {
+        "name": "Niño Jesús de Praga",
+        "category": "ayacucho",
+        "place": "Ayacucho",
+        "sourceId": "navidad",
+        "short": "Niño Praga",
+        "note": "Día tradicional; programa local de 2027 por confirmar.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-05-03": [
+      {
+        "name": "Fiesta de las Cruces de Luricocha",
+        "category": "ayacucho",
+        "place": "Luricocha · Huanta",
+        "sourceId": "cruces",
+        "short": "Cruces",
+        "note": "Día central tradicional. Los actos se extienden desde fines de abril; programa 2027 por confirmar.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-08-05": [
+      {
+        "name": "Virgen de las Nieves",
+        "category": "ayacucho",
+        "place": "Coracora · Parinacochas",
+        "sourceId": "agosto",
+        "short": "V. Nieves",
+        "note": "Día tradicional; programa local de 2027 por confirmar.",
+        "kind": "Celebración · Ayacucho"
+      },
+      {
+        "name": "Cruz de Chalpón de Motupe",
+        "category": "peru",
+        "place": "Motupe · Lambayeque",
+        "sourceId": "motupe",
+        "short": "Motupe",
+        "note": "Día tradicional. Programa local de 2027 por confirmar; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-08-15": [
+      {
+        "name": "Virgen de la Asunción",
+        "category": "ayacucho",
+        "place": "Cangallo y otras localidades",
+        "sourceId": "inei",
+        "short": "Asunción",
+        "note": "Referencia tradicional del inventario del INEI; confirmar el programa local vigente.",
+        "kind": "Celebración · Ayacucho"
+      },
+      {
+        "name": "Día del Niño",
+        "category": "peru",
+        "place": "Perú",
+        "sourceId": "infancia",
+        "short": "Niño",
+        "note": "Fecha 2027 calculada según la regla anual de la fuente. No es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-08-24": [
+      {
+        "name": "San Bartolomé de Cancha Cancha",
+        "category": "ayacucho",
+        "place": "Cancha Cancha · Chuschi · Cangallo",
+        "sourceId": "inei",
+        "short": "S. Bart.",
+        "note": "Día tradicional registrado por el INEI; programa local 2027 por confirmar.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-08-26": [
+      {
+        "name": "San Isidro Labrador · Yapuy",
+        "category": "ayacucho",
+        "place": "Cancha Cancha · Chuschi · Cangallo",
+        "sourceId": "isidro",
+        "short": "Yapuy",
+        "note": "Día tradicional; programa local de 2027 por confirmar.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-09-08": [
+      {
+        "name": "Virgen de Cocharcas",
+        "category": "ayacucho",
+        "place": "Devoción en Ayacucho; santuario principal en Apurímac",
+        "sourceId": "cocharcas",
+        "short": "Cocharcas",
+        "note": "Fecha de peregrinación. No implica feriado nacional ni descanso automático en Ayacucho.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-09-14": [
+      {
+        "name": "Señor de Maynay",
+        "category": "ayacucho",
+        "place": "Maynay · Huanta",
+        "sourceId": "maynay",
+        "short": "Maynay",
+        "note": "Día central religioso. La feria agropecuaria tiene otras fechas, variables cada año.",
+        "kind": "Celebración · Ayacucho"
+      },
+      {
+        "name": "Señor de Quinuapata",
+        "category": "ayacucho",
+        "place": "Quinuapata · Huamanga",
+        "sourceId": "quinuapata",
+        "short": "Quinuapata",
+        "note": "Día tradicional; programa local de 2027 por confirmar.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-11-06": [
+      {
+        "name": "Día de la Canción Ayacuchana",
+        "category": "ayacucho",
+        "place": "Ayacucho",
+        "sourceId": "regional",
+        "short": "Canción Ayac.",
+        "note": "El calendario regional oficial de 2026 lo incluye como día no laborable. Alcance laboral en 2027 por verificar; no es feriado nacional.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-03-19": [
+      {
+        "name": "Viernes de Dolores",
+        "category": "ayacucho",
+        "place": "Huamanga y otras localidades de Ayacucho",
+        "sourceId": "semana",
+        "short": "Dolores",
+        "note": "Fecha litúrgica 2027. Programa local de procesiones y horarios por confirmar.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-03-20": [
+      {
+        "name": "Sábado de Pasión",
+        "category": "ayacucho",
+        "place": "Huamanga y otras localidades de Ayacucho",
+        "sourceId": "semana",
+        "short": "S. Pasión",
+        "note": "Fecha litúrgica 2027. Programa local de procesiones y horarios por confirmar.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-03-22": [
+      {
+        "name": "Lunes Santo",
+        "category": "ayacucho",
+        "place": "Huamanga y otras localidades de Ayacucho",
+        "sourceId": "semana",
+        "short": "L. Santo",
+        "note": "Fecha litúrgica 2027. Programa local de procesiones y horarios por confirmar.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-03-23": [
+      {
+        "name": "Martes Santo",
+        "category": "ayacucho",
+        "place": "Huamanga y otras localidades de Ayacucho",
+        "sourceId": "semana",
+        "short": "M. Santo",
+        "note": "Fecha litúrgica 2027. Programa local de procesiones y horarios por confirmar.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-03-24": [
+      {
+        "name": "Miércoles Santo · El Encuentro",
+        "category": "ayacucho",
+        "place": "Huamanga y otras localidades de Ayacucho",
+        "sourceId": "semana",
+        "short": "Encuentro",
+        "note": "Fecha litúrgica 2027. Programa local de procesiones y horarios por confirmar.",
+        "kind": "Celebración · Ayacucho"
+      }
+    ],
+    "2027-02-10": [
+      {
+        "name": "Miércoles de Ceniza",
+        "category": "peru",
+        "place": "Perú · calendario religioso",
+        "sourceId": "semana",
+        "short": "Ceniza",
+        "note": "Fecha litúrgica; no fija los días de actividades del Carnaval Ayacuchano.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-05-27": [
+      {
+        "name": "Corpus Christi",
+        "category": "peru",
+        "place": "Cusco, Cajamarca, Ayacucho y otras ciudades",
+        "sourceId": "corpus",
+        "short": "Corpus",
+        "note": "Jueves litúrgico, 60 días después de Pascua. El programa de cada localidad puede variar.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-02-02": [
+      {
+        "name": "Virgen de la Candelaria",
+        "category": "peru",
+        "place": "Puno",
+        "sourceId": "candelaria",
+        "short": "Candelaria",
+        "note": "Día tradicional. Programa local de 2027 por confirmar; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-03-08": [
+      {
+        "name": "Día Internacional de la Mujer",
+        "category": "peru",
+        "place": "Perú",
+        "sourceId": "ambiente",
+        "short": "Mujer",
+        "note": "Celebración; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-06-28": [
+      {
+        "name": "Día Nacional del Ceviche",
+        "category": "peru",
+        "place": "Perú",
+        "sourceId": "ceviche",
+        "short": "Ceviche",
+        "note": "Celebración; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-07-06": [
+      {
+        "name": "Día del Maestro",
+        "category": "peru",
+        "place": "Perú",
+        "sourceId": "maestro",
+        "short": "Maestro",
+        "note": "Celebración; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-07-16": [
+      {
+        "name": "Virgen del Carmen de Paucartambo",
+        "category": "peru",
+        "place": "Paucartambo · Cusco",
+        "sourceId": "carmen",
+        "short": "V. Carmen",
+        "note": "Día tradicional. Programa local de 2027 por confirmar; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-08-01": [
+      {
+        "name": "Pachamama Raymi · Madre Tierra",
+        "category": "peru",
+        "place": "Cusco y comunidades andinas",
+        "sourceId": "agosto",
+        "short": "Pachamama",
+        "note": "Celebración; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-09-24": [
+      {
+        "name": "Virgen de las Mercedes de Paita",
+        "category": "peru",
+        "place": "Paita · Piura",
+        "sourceId": "mercedes",
+        "short": "Mercedes",
+        "note": "Día tradicional. Programa local de 2027 por confirmar; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-10-13": [
+      {
+        "name": "Señor Cautivo de Ayabaca",
+        "category": "peru",
+        "place": "Ayabaca · Piura",
+        "sourceId": "cautivo",
+        "short": "Cautivo",
+        "note": "Día tradicional. Programa local de 2027 por confirmar; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-10-14": [
+      {
+        "name": "Santa Fortunata",
+        "category": "peru",
+        "place": "Moquegua",
+        "sourceId": "fortunata",
+        "short": "Fortunata",
+        "note": "Día tradicional. Programa local de 2027 por confirmar; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-10-18": [
+      {
+        "name": "Señor de los Milagros",
+        "category": "peru",
+        "place": "Lima y otras ciudades del Perú",
+        "sourceId": "milagros",
+        "short": "Milagros",
+        "note": "Día tradicional. Programa local de 2027 por confirmar; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-10-19": [
+      {
+        "name": "Señor de los Milagros",
+        "category": "peru",
+        "place": "Lima y otras ciudades del Perú",
+        "sourceId": "milagros",
+        "short": "Milagros",
+        "note": "Día tradicional. Programa local de 2027 por confirmar; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-10-28": [
+      {
+        "name": "Señor de los Milagros",
+        "category": "peru",
+        "place": "Lima y otras ciudades del Perú",
+        "sourceId": "milagros",
+        "short": "Milagros",
+        "note": "Día tradicional. Programa local de 2027 por confirmar; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-11-03": [
+      {
+        "name": "San Martín de Porres",
+        "category": "peru",
+        "place": "Lima y otras ciudades del Perú",
+        "sourceId": "martin",
+        "short": "S. Martín",
+        "note": "Celebración; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-11-22": [
+      {
+        "name": "Día del Músico · Santa Cecilia",
+        "category": "peru",
+        "place": "Perú",
+        "sourceId": "musico",
+        "short": "Músico",
+        "note": "Celebración; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-12-15": [
+      {
+        "name": "Virgen de la Puerta de Otuzco",
+        "category": "peru",
+        "place": "Otuzco · La Libertad",
+        "sourceId": "puerta",
+        "short": "V. Puerta",
+        "note": "Día tradicional. Programa local de 2027 por confirmar; no es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-02-06": [
+      {
+        "name": "Día del Pisco Sour",
+        "category": "peru",
+        "place": "Perú",
+        "sourceId": "sour",
+        "short": "Pisco Sour",
+        "note": "Fecha 2027 calculada según la regla anual de la fuente. No es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-04-11": [
+      {
+        "name": "Día del Niño Peruano",
+        "category": "peru",
+        "place": "Perú",
+        "sourceId": "nino",
+        "short": "Niño Perú",
+        "note": "Fecha 2027 calculada según la regla anual de la fuente. No es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-07-18": [
+      {
+        "name": "Día del Pollo a la Brasa",
+        "category": "peru",
+        "place": "Perú",
+        "sourceId": "pollo",
+        "short": "Pollo",
+        "note": "Fecha 2027 calculada según la regla anual de la fuente. No es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ],
+    "2027-07-25": [
+      {
+        "name": "Día Nacional del Pisco",
+        "category": "peru",
+        "place": "Perú",
+        "sourceId": "pisco",
+        "short": "Pisco",
+        "note": "Fecha 2027 calculada según la regla anual de la fuente. No es feriado nacional.",
+        "kind": "Celebración · Perú"
+      }
+    ]
+  },
+  "seasons": [
+    {
+      "name": "Carnaval Ayacuchano",
+      "months": [
+        2,
+        3
+      ],
+      "category": "ayacucho",
+      "place": "Huamanga y otras provincias de Ayacucho",
+      "sourceId": "carnaval",
+      "note": "Temporada febrero–marzo. No se encontró un programa oficial confirmado de 2027: comparsas, recorridos y días no laborables por confirmar."
+    },
+    {
+      "name": "Carnavales de Cajamarca y otras regiones",
+      "months": [
+        2,
+        3
+      ],
+      "category": "peru",
+      "place": "Cajamarca, Junín, Apurímac y otras regiones",
+      "sourceId": "carnaval",
+      "note": "Temporada de carnavales. Programa 2027 por confirmar para cada localidad."
+    },
+    {
+      "name": "Concurso Nacional de Marinera",
+      "months": [
+        1,
+        2
+      ],
+      "category": "peru",
+      "place": "Tradición de Trujillo · sede del certamen por confirmar",
+      "sourceId": "marinera",
+      "note": "Habitualmente a fines de enero; algunas ediciones culminan en febrero. Fecha y sede oficiales de 2027 por confirmar."
+    },
+    {
+      "name": "Festival de la Vendimia",
+      "months": [
+        3
+      ],
+      "category": "peru",
+      "place": "Ica y sus provincias",
+      "sourceId": "vendimia",
+      "note": "Temporada de marzo. Programa y fechas de 2027 por confirmar."
+    },
+    {
+      "name": "Peregrinación del Señor de Qoyllur Rit’i",
+      "months": [
+        5,
+        6
+      ],
+      "category": "peru",
+      "place": "Sinakara · Quispicanchi · Cusco",
+      "sourceId": "qoyllur",
+      "note": "Festividad móvil entre mayo y junio. Programa de peregrinación 2027 por confirmar."
+    },
+    {
+      "name": "Hatun Yaku Raymi · Fiesta del Agua",
+      "months": [
+        8
+      ],
+      "category": "ayacucho",
+      "place": "Andamarca · Carmen Salcedo · Lucanas",
+      "sourceId": "yaku",
+      "note": "Temporada tradicional del 14 al 26 de agosto, con actos principales en los últimos días. Programa exacto de 2027 por confirmar."
+    },
+    {
+      "name": "Feria del Señor de Maynay",
+      "months": [
+        9
+      ],
+      "category": "ayacucho",
+      "place": "Huanta",
+      "sourceId": "maynay",
+      "note": "Feria de septiembre con fechas variables. No confundir con el día religioso del 14 de septiembre. Programa 2027 por confirmar."
+    }
+  ],
+  "sources": {
+    "feriados": {
+      "title": "Gobierno del Perú · feriados nacionales",
+      "url": "https://www.gob.pe/feriados"
+    },
+    "regional": {
+      "title": "Gobierno del Perú · calendario regional",
+      "url": "https://www.gob.pe/feriados?tab=regional"
+    },
+    "semana": {
+      "title": "Agencia Andina · Semana Santa de Ayacucho",
+      "url": "https://andina.pe/agencia/noticia-ayacucho-oficializa-programa-actividades-semana-santa-2026-1065320.aspx"
+    },
+    "huamanga": {
+      "title": "Municipalidad de Huamanga · aniversario",
+      "url": "https://www.gob.pe/institucion/munihuamanga/normas-legales/8205129-008-2025-mph-a"
+    },
+    "navidad": {
+      "title": "Biblioteca Nacional del Perú · danzas navideñas de Ayacucho",
+      "url": "https://isbn.bnp.gob.pe/catalogo.php?mode=detalle&nt=139183"
+    },
+    "cruces": {
+      "title": "MINCETUR · Fiesta de las Cruces de Luricocha",
+      "url": "https://consultasenlinea.mincetur.gob.pe/fichaInventario/index.aspx?cod_Ficha=11652"
+    },
+    "chaccu": {
+      "title": "SERFOR · Vicuña y Chaccu Nacional",
+      "url": "https://www.gob.pe/institucion/serfor/noticias/789019-ayacucho-realizan-i-simposio-internacional-de-vicuna-y-xxviii-chaccu-nacional"
+    },
+    "vilcas": {
+      "title": "PROMPERÚ · Vilcas Raymi",
+      "url": "https://www.ytuqueplanes.com/festividades/ayacucho/25deg-vilcas-raymi-vilcas-huaman"
+    },
+    "agosto": {
+      "title": "Municipalidad de Miraflores · calendario de agosto",
+      "url": "https://www.miraflores.gob.pe/Gestorw3b/files/pdf/6445-9016-calendario-agosto-_1_.pdf"
+    },
+    "inei": {
+      "title": "INEI · festividades tradicionales de Ayacucho",
+      "url": "https://proyectos.inei.gob.pe/web/biblioineipub/bancopub/Est/Lib0277/tur2.HTM"
+    },
+    "isidro": {
+      "title": "Ministerio de Cultura · San Isidro de Cancha Cancha",
+      "url": "https://www.gob.pe/institucion/cultura/noticias/1366046-ministerio-de-cultura-declara-patrimonio-cultural-de-la-nacion-a-la-festividad-en-honor-a-san-isidro-labrador-de-cancha-cancha-en-ayacucho"
+    },
+    "cocharcas": {
+      "title": "MINCETUR · Santuario de Cocharcas",
+      "url": "https://consultasenlinea.mincetur.gob.pe/fichaInventario/index.aspx?cod_Ficha=34"
+    },
+    "maynay": {
+      "title": "Universidad Nacional Autónoma de Huanta · Señor de Maynay",
+      "url": "https://aldia.unah.edu.pe/?p=6477"
+    },
+    "quinuapata": {
+      "title": "SUNARP · Señor de Quinuapata",
+      "url": "https://www.gob.pe/institucion/sunarp/noticias/1323288-solo-11-de-las-33-iglesias-historicas-de-huamanga-estan-inscritas-en-el-registro-de-predios-de-ayacucho"
+    },
+    "cancion": {
+      "title": "Agencia Andina · Día de la Canción Ayacuchana",
+      "url": "https://andina.pe/agencia/noticia-dia-de-cancion-ayacuchana-conoce-por-se-conmemora-y-a-sus-exponentes-historicos-868320.aspx"
+    },
+    "carnaval": {
+      "title": "PROMPERÚ · carnavales del Perú",
+      "url": "https://www.gob.pe/institucion/promperu/noticias/1112609-promperu-invita-a-disfrutar-la-temporada-de-carnavales-que-este-ano-se-extiende-hasta-el-mes-de-abril"
+    },
+    "yaku": {
+      "title": "MINCETUR · Yaku Raymi de Andamarca",
+      "url": "https://consultasenlinea.mincetur.gob.pe/fichaInventario/index.aspx?cod_Ficha=11547"
+    },
+    "candelaria": {
+      "title": "PROMPERÚ · Virgen de la Candelaria",
+      "url": "https://www.peru.travel/es/inspirate/candelaria-5-consejos-para-disfrutar-al-maximo-esta-festividad-peruana"
+    },
+    "sour": {
+      "title": "CENFOTUR · Día del Pisco Sour",
+      "url": "https://www.gob.pe/institucion/cenfotur/noticias/637428-el-pisco-sour-patrimonio-cultural-de-la-nacion"
+    },
+    "amor": {
+      "title": "SERPAR · Amor y Amistad",
+      "url": "https://www.serpar.gob.pe/eventos/festival-del-amor-y-la-amistad-en-los-clubes-zonales/"
+    },
+    "ambiente": {
+      "title": "MINAM · calendario ambiental peruano",
+      "url": "https://sinia.minam.gob.pe/sites/default/files/archivos/public/docs/Calendario%20Ambiental%20Peruano%202026.pdf"
+    },
+    "nino": {
+      "title": "SUSALUD · Día del Niño Peruano",
+      "url": "https://www.gob.pe/institucion/susalud/campa%C3%B1as/8390-en-el-dia-del-nino-peruano-conozcamos-sus-derechos-en-salud"
+    },
+    "madre": {
+      "title": "Policía Nacional del Perú · Día de la Madre",
+      "url": "https://www.gob.pe/institucion/pnp/informes-publicaciones/6755663-mensaje-por-el-dia-de-la-madre-2025"
+    },
+    "padre": {
+      "title": "Presidencia del Perú · Día del Padre",
+      "url": "https://www.gob.pe/institucion/presidencia/noticias/8564-jefe-de-estado-saluda-a-los-padres-peruanos-en-su-dia"
+    },
+    "chapi": {
+      "title": "Diario Oficial El Peruano · Virgen de Chapi",
+      "url": "https://www.mef.gob.pe/contenidos/servicios_web/conectamef_quechua/pdf/normas_legales_2012/NL20120905.PDF"
+    },
+    "corpus": {
+      "title": "Gobierno Regional Cajamarca · Corpus Christi",
+      "url": "https://www.regioncajamarca.gob.pe/portal/noticias/pdf/99"
+    },
+    "sanjuan": {
+      "title": "Gobierno Regional San Martín · Fiesta de San Juan",
+      "url": "https://www.gob.pe/institucion/regionsanmartin/noticias/781040-gobierno-regional-brinda-recomendaciones-en-tradicional-fiesta-de-san-juan"
+    },
+    "inti": {
+      "title": "PROMPERÚ · Inti Raymi",
+      "url": "https://www.peru.travel/es/eventos/inti-raymi"
+    },
+    "ceviche": {
+      "title": "Ministerio de la Mujer · Día del Ceviche",
+      "url": "https://www.gob.pe/institucion/mimp/noticias/1197888-ministra-destaca-labor-de-cocineras-en-el-dia-del-ceviche-este-plato-representa-la-pujanza-y-el-empoderamiento-de-las-mujeres"
+    },
+    "maestro": {
+      "title": "Ministerio de Educación · Día del Maestro",
+      "url": "https://www.gob.pe/institucion/minedu/noticias/1198432-comunicado-n-08-2025-minedu"
+    },
+    "carmen": {
+      "title": "IRTP · Virgen del Carmen de Paucartambo",
+      "url": "https://www.gob.pe/institucion/irtp/campa%C3%B1as/113065-festividad-de-la-virgen-del-carmen-de-paucartambo"
+    },
+    "pollo": {
+      "title": "MIDAGRI · Día del Pollo a la Brasa",
+      "url": "https://www.gob.pe/institucion/midagri/campa%C3%B1as/71683-dia-del-pollo-a-la-brasa-hinchas-del-pollo-a-la-brasa-es-mas-rico"
+    },
+    "pisco": {
+      "title": "Indecopi · Día Nacional del Pisco",
+      "url": "https://www.gob.pe/institucion/indecopi/noticias/634632-dia-nacional-del-pisco-conoce-como-comprar-y-reconocer-un-pisco-autentico-con-estas-recomendaciones-del-indecopi"
+    },
+    "motupe": {
+      "title": "PROMPERÚ · Santísima Cruz de Motupe",
+      "url": "https://www.peru.travel/es/eventos/santisima-cruz-de-motupe-una-de-las-mayores-fiestas-religiosas-de-lambayeque"
+    },
+    "infancia": {
+      "title": "EsSalud · Día del Niño",
+      "url": "https://www.gob.pe/institucion/essalud/noticias/1227966-essalud-como-explicar-el-significado-del-dia-del-nino-a-los-pequenos-del-hogar"
+    },
+    "mercedes": {
+      "title": "PROMPERÚ · Virgen de las Mercedes de Paita",
+      "url": "https://www.peru.travel/es/eventos/fiesta-de-la-virgen-de-las-mercedes-de-paita"
+    },
+    "cautivo": {
+      "title": "Municipalidad de Sullana · Señor Cautivo de Ayabaca",
+      "url": "https://www.gob.pe/institucion/munisullana/campa%C3%B1as/40443-peregrinacion-y-festividad-del-senor-cautivo-de-ayabaca"
+    },
+    "fortunata": {
+      "title": "Ministerio de Cultura · Santa Fortunata",
+      "url": "https://www.gob.pe/institucion/cultura/noticias/46373-moquegua-celebro-festividad-de-santa-fortunata-patrimonio-cultural-de-la-nacion"
+    },
+    "milagros": {
+      "title": "Arzobispado de Lima · Señor de los Milagros",
+      "url": "https://www.arzobispadodelima.org/actividades/todas-las-actividades-por-el-mes-del-senor-de-los-milagros/"
+    },
+    "criolla": {
+      "title": "PROMPERÚ · Canción Criolla, Halloween y Todos los Santos",
+      "url": "https://www.peru.travel/es/eventos/dia-de-todos-los-santos"
+    },
+    "martin": {
+      "title": "Conferencia Episcopal Peruana · San Martín de Porres",
+      "url": "https://noticias.iglesia.org.pe/san-martin-de-porres-patrono-de-la-justicia-social-y-la-paz/"
+    },
+    "musico": {
+      "title": "Ministerio de Cultura · Día del Músico",
+      "url": "https://www.gob.pe/institucion/cultura/noticias/69377-jovenes-solistas-celebrando-el-dia-del-musico"
+    },
+    "puerta": {
+      "title": "Diario Oficial El Peruano · Virgen de la Puerta",
+      "url": "https://busquedas.elperuano.pe/dispositivo/NL/2153337-1"
+    },
+    "marinera": {
+      "title": "MINCETUR · Festival de la Marinera",
+      "url": "https://consultasenlinea.mincetur.gob.pe/fichaInventario/index.aspx?cod_Ficha=2102"
+    },
+    "vendimia": {
+      "title": "PROMPERÚ · Vendimia en Ica",
+      "url": "https://www.gob.pe/institucion/promperu/noticias/1358915-promperu-lanza-el-festival-internacional-de-la-vendimia-region-ica-2026"
+    },
+    "qoyllur": {
+      "title": "PROMPERÚ · guía del viajero, fechas móviles",
+      "url": "https://repositorio.promperu.gob.pe/server/api/core/bitstreams/2058d963-db24-466d-b756-3e863fe9476b/content"
+    },
+    "difuntos": {
+      "title": "Santa Sede · conmemoración de los fieles difuntos",
+      "url": "https://www.vaticannews.va/es/fiestas-liturgicas/conmemoracion-de-todos-los-fieles-difuntos.html"
+    },
+    "nochebuena": {
+      "title": "Arzobispado de Lima · Nochebuena",
+      "url": "https://www.arzobispadodelima.org/actividades/catedral-de-lima-invitacion-a-la-misa-de-nochebuena/"
+    },
+    "fin": {
+      "title": "Diario Oficial El Peruano · celebraciones de fin de año",
+      "url": "https://elperuano.pe/noticia/111888-gobierno-dispone-restringir-el-transporte-privado-los-dias-24-25-y-31-de-diciembre-y-el-1-de-enero"
+    }
+  }
+}

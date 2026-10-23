@@ -7,6 +7,11 @@ service cloud.firestore {
     function canWrite() {
       return request.auth != null && request.auth.token.reservasRole == 'admin';
     }
+    function ownsReservation(r) {
+      return (request.auth.token.email == 'wilmer@recreolasvegas.web.app' && r.registeredBy == 'Wilmer')
+        || (request.auth.token.email == 'chino@recreolasvegas.web.app' && r.registeredBy == 'Chino')
+        || (request.auth.token.email == 'jhoan@recreolasvegas.web.app' && r.registeredBy in ['Jhoan','Juan']);
+    }
     function validReservation() {
       let r=request.resource.data;
       return r.keys().hasAll(['registeredBy','status','advance','event','notes','updatedAt'])
@@ -15,17 +20,20 @@ service cloud.firestore {
         && r.status in ['Confirmado','Pendiente']
         && r.advance is number && r.advance >= 0 && r.advance <= 999999999
         && r.event is string && r.event.size() > 0 && r.event.size() <= 120
+        && r.event.matches('.*\\S.*')
         && r.notes is string && r.notes.size() <= 2000
-        && r.updatedAt is string && r.updatedAt.size() <= 40;
+        && r.updatedAt is string && r.updatedAt.size() > 0 && r.updatedAt.size() <= 40;
     }
     match /artifacts/calendario-2027-reservas-app-v2/public/data/{venue}/{date} {
       function allowedVenue() { return venue in ['reservations_gras_2027_v2','reservations_recreo_2027_v2']; }
       function editableDate() {
-        return date != '2027-01-01' && date.matches('^2027-((01|03|05|07|08|10|12)-(0[1-9]|[12][0-9]|3[01])|(04|06|09|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))$');
+        return (date != '2027-01-01' || request.auth.token.email == 'chino@recreolasvegas.web.app') && date.matches('^2027-((01|03|05|07|08|10|12)-(0[1-9]|[12][0-9]|3[01])|(04|06|09|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))$');
       }
       allow read: if canRead() && allowedVenue();
-      allow create, update: if canWrite() && allowedVenue() && editableDate() && validReservation();
-      allow delete: if canWrite() && allowedVenue() && editableDate();
+      allow create: if canWrite() && allowedVenue() && editableDate() && validReservation() && ownsReservation(request.resource.data);
+      allow update: if canWrite() && allowedVenue() && editableDate() && validReservation()
+        && ownsReservation(resource.data) && request.resource.data.registeredBy == resource.data.registeredBy;
+      allow delete: if canWrite() && allowedVenue() && editableDate() && ownsReservation(resource.data);
     }
   }
 }

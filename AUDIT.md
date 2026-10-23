@@ -1,52 +1,44 @@
-# Revisión de Recreo Las Vegas
+# Revisión técnica · 23 de octubre de 2026
 
-## Accesos individuales
+## Resultado y alcance
 
-Se reemplazó el acceso compartido por cuatro cuentas de Firebase Authentication. WILMER, CHINO VEGAS y JHOAN llevan el claim `reservasRole=admin`; LASVEGAS lleva `reservasRole=viewer`. Las contraseñas se recibieron por stdin al aprovisionar y no forman parte del repositorio. El inicio de sesión real de cada cuenta y sus claims se comprobaron durante la creación.
+Revisión del código principal y de la candidata móvil V2. Cambios preparados para GitHub; **sin despliegue en Firebase ni modificaciones a reservas reales**. La V1 histórica se conserva con su SHA-256 original.
 
-La interfaz restringe la edición según el token y las reglas publicadas aplican el mismo control en el servidor. Las cuentas anteriores sin el claim ya no tienen acceso a las reservas. Las reservas existentes no se modificaron.
+## Problemas corregidos
 
-Validación: 26 pruebas unitarias, integración DOM para administrador y consulta, y 43 evaluaciones de reglas con Firebase Rules API (sin escrituras reales), cubriendo ambas sedes, lectura/listado, creación, edición, eliminación, usuario anónimo, usuario sin rol y fecha protegida.
+- Guardar una reserva que otro dispositivo eliminó provocaba una excepción antes del manejo de errores. El responsable original ahora se captura al abrir el formulario y la transacción comunica el conflicto sin recrear el registro.
+- Operaciones y listeners pendientes podían actualizar la interfaz después de cambiar de sesión. Se capturan usuario, generación de sesión y contexto de edición; se descartan callbacks de listeners anteriores.
+- Las reservas compartidas se persistían en el navegador. Ya no se escriben copias cloud nuevas en localStorage y se elimina la copia cloud anterior al iniciar la sesión. La clave de reservas locales históricas se conserva para no perder datos anteriores.
+- Existía un asistente inactivo de autorización por navegador con instrucciones antiguas. Se eliminó del código actual y se reemplazó la documentación obsoleta de autenticación anónima.
+- Se reforzó la validación de fechas reales de 2027, importes, estados y tamaños de textos. Las reglas rechazan eventos formados solo por espacios y versiones vacías.
+- Se prepararon cabeceras de seguridad y una CSP basada en hashes verificables. No permite scripts inline arbitrarios ni eval.
+- El service worker de V2 ya no intercepta otras aplicaciones del mismo origen. El servidor de demos bloquea también variantes de mayúsculas del acceso real.
+- El logo GRAS de 1.195.347 bytes tiene una exportación web de 99.432 bytes (aprox. 92% menos). Se conservan el logo original y la V1.
+- Se agregaron package.json, lockfile, comandos reproducibles de pruebas, escaneo básico de secretos y un respaldo local excluido de Git. No se agregaron dependencias de producción.
 
-## Actualización tras correcciones
+## Evidencia
 
-Corregidos los hallazgos 1–5: creación diferenciada de edición, comparación del contenido original en transacciones, botón de acceso bloqueado hasta inicializar, prevención temprana del envío nativo, observador de autenticación y validación UTC de fechas. Se bloquean escrituras sin sesión cloud.
+- **40 pruebas unitarias/regresión/seguridad**, más las dos integraciones DOM de interfaz principal y V2. Incluyen CRUD, permisos por responsable, sesión, concurrencia, XSS como texto, offline/reconexión, WhatsApp, feriados y filtros.
+- **130 evaluaciones de reglas correctas** mediante Firebase Rules API: solicitudes simuladas, sin escribir documentos reales. Cubren propietarios, viewer, anónimos, campos, fechas, rutas y transferencias de responsable.
+- Consultas reales de solo lectura: correo/contraseña habilitado; las cuatro cuentas están activas, con tres claims admin y uno viewer; las reglas publicadas comprueban roles. Página y logos actuales devuelven HTTP 200.
+- `npm audit`: cero vulnerabilidades reportadas en el árbol de dependencias instalado. Esto no audita los SDK Firebase cargados desde CDN.
+- Escaneo de patrones de claves privadas/tokens sobre archivos de código preparados, más revisión del diff. No equivale a una auditoría criptográfica o de todo el historial Git.
+- Backup local JSON verificado de 6 reservas, sin escrituras en Firebase y excluido del repositorio.
+- La revisión visual previa de V2 a 390, 768 y 1440 px no mostró desbordamientos. La prueba de integración se volvió a ejecutar tras propagar las correcciones del código principal.
 
-Resultado actual: **25 pruebas unitarias correctas** y **prueba de integración DOM correcta** (`node tests/ui.cjs`). Esta última verifica contraseña errónea, login, sincronización, altas, ediciones, eliminación confirmada, sedes, logos, escape de HTML, febrero y cierre de sesión con SDK simulado. Para ejecutarla: `npm.cmd install --prefix .test-runtime --no-audit --no-fund jsdom`.
+## Arquitectura y límites
 
-Las secciones siguientes conservan el diagnóstico anterior para trazabilidad. Los controles reales de Firebase son de solo lectura; no equivalen a una prueba con contraseña real ni a pruebas visuales en navegador o emulador de reglas. El acceso auxiliar por navegador sigue siendo código inactivo; no se usa para autorizar usuarios. La cuenta compartida sigue siendo una decisión de producto.
+No hay consultas SQL ni un backend con cookies de sesión: SQL Injection y CSRF clásico de formularios no son las superficies de este proyecto. Firestore usa tokens de Firebase y reglas del servidor. Los textos se insertan mediante textContent y no mediante HTML del usuario.
 
-Revisión del código actual y consultas de solo lectura al proyecto Firebase `recreolasvegas`.
+El cliente genera updatedAt como control de versión; no es una firma ni un registro de auditoría del servidor. Las cuentas y claims son administrados fuera de la página. No se modificaron credenciales, identidades ni planes de facturación.
 
-## Resultados
+## Pendientes antes de certificar producción
 
-`node --test tests/reservations.test.cjs`: 21 pruebas, 20 correctas y 1 regresión fallida.
-Las pruebas ejecutan funciones extraídas del HTML real en un entorno aislado de Node; simulan almacenamiento y transacciones. No son pruebas completas de navegador ni del emulador de reglas.
+- Desplegar, cuando se autorice, las cabeceras y reglas nuevas; verificar su respuesta en el dominio publicado.
+- Elegir si se promueve la V2 móvil; su demo sigue aislado de los datos reales.
+- Probar teclado, instalación PWA y retorno desde WhatsApp en Android/iPhone físicos. La emulación no certifica estos comportamientos.
+- Hacer una prueba CRUD completa en un proyecto de staging y un ensayo de restauración. Las integraciones locales usan SDK simulado y las evaluaciones de reglas no son transacciones reales en producción.
+- Activar un respaldo programado y verificar permisos de su almacenamiento si se requiere operación continua. No se habilitaron servicios de pago ni se cambió facturación.
+- Revisar periódicamente los SDK CDN y actualizar el calendario con programas oficiales de festividades de 2027.
 
-`node tests/firebase-readonly.cjs`: Authentication por correo/contraseña habilitado; cuenta de acceso existente y activa; su UID figura en las reglas publicadas; dominio web.app autorizado. Página y ambos logos responden HTTP 200. El script necesita una sesión vigente de Firebase CLI y no imprime tokens.
-
-## Hallazgos
-
-1. **Alta: sobrescritura de reserva concurrente.** `openModal(key)` asigna `editKey` incluso cuando el día está vacío. La transacción rechaza duplicados solamente cuando `!editKey`. Abrir un día vacío y guardar después de que otra persona lo reservó sobrescribe su registro. Reproducido por la prueba fallida. Debe separarse la fecha seleccionada del estado creación/edición.
-2. **Media: inicio de sesión antes de estar listo.** El formulario está habilitado desde el HTML, pero su controlador submit se registra después de descargar los tres SDK y esperar `authStateReady`. En esa ventana el navegador puede enviar el formulario de forma nativa y recargar. Si falla la inicialización, nunca se instala el controlador. Debe interceptarse submit inmediatamente y habilitar el botón cuando Firebase esté preparado.
-3. **Media: sesiones entre pestañas.** Solo se comprueba `auth.currentUser` al iniciar y se restaura una vez. No hay observador de cambios de autenticación. Cerrar sesión en otro navegador/pestaña no actualiza necesariamente el formulario y los listeners de esta pestaña; Firebase sigue siendo responsable de denegar accesos sin credenciales válidas.
-4. **Media: cambios simultáneos de edición.** Se lee el documento dentro de la transacción pero no se compara una versión original. Dos ediciones sucesivas del mismo registro siguen el comportamiento de último guardado y pueden perder cambios anteriores. Una edición de un documento eliminado puede recrearlo.
-5. **Baja: validación de fecha dependiente de zona horaria.** `normalizeStore` crea una fecha al mediodía local y compara el día UTC. En UTC+13/+14 puede descartar fechas válidas. No afecta a Lima; conviene validar componentes de calendario sin convertir zona horaria.
-6. **Baja: configuración de acceso obsoleta.** El bloque de autorización por navegador usa `deviceUid`, que nunca se asigna. FIREBASE.md y la prueba antigua apuntan a vegas.html y autenticación anónima; la app actual usa index.html y cuenta compartida.
-7. **Limitación de trazabilidad:** “Registrado por” es un campo seleccionable. Las personas usan una cuenta compartida; el campo no acredita quién hizo un cambio.
-
-## Controles comprobados por código y pruebas
-
-- Fechas inválidas almacenadas se descartan; importes negativos/no numéricos se normalizan.
-- La fecha protegida del 1 de enero rechaza escrituras en la lógica y en las reglas publicadas.
-- Un error de escritura del servidor no actualiza el estado local como si hubiese tenido éxito.
-- Separación de sedes y eliminación del registro seleccionado en el entorno simulado.
-- Las reglas publicadas restringen usuarios, colecciones, fechas y campos.
-- Los textos de reservas se insertan usando textContent, evitando interpretarlos como HTML.
-- Copia public/index.html idéntica a index.html; recursos de logos presentes.
-
-## Pendiente para certificar funcionamiento integral
-
-No se ha comprobado la contraseña real ni una sesión de usuario final en navegador, ni se han creado/editado/eliminado reservas en producción. Falta prueba integral en navegador y emulador de Firestore (incluidos permisos y concurrencia), prueba de dos sesiones y dispositivos móviles. HTTP 200 no certifica esas operaciones.
-
-En esta revisión solo se añadieron pruebas y este informe. No se modificó ni desplegó la aplicación, ni se alteraron datos o reglas de Firebase.
+No se afirma que estas comprobaciones sustituyan un pentest, una auditoría OWASP completa o pruebas en todos los dispositivos.
