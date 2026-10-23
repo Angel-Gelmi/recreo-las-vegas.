@@ -8,7 +8,7 @@ function context(extra='') {
  const ctx=vm.createContext({localStorage:{setItem(){}}, console});
  vm.runInContext(`const special='2027-01-01'; const defaultReservation=()=>({event:'Protegida',advance:0});
  ${section('function validStore(', '    try { const saved=')}
- let editVenue='gras', stores={gras:{},recreo:{}},cloud=null,cloudReady={gras:false,recreo:false};
+ let sessionRole='admin',editVenue='gras', stores={gras:{},recreo:{}},cloud=null,cloudReady={gras:false,recreo:false};
  function persist(x){localStorage.setItem('test',JSON.stringify(x));} function render(){} function toast(){}
  ${section('async function commit(', "    $('reservation-form').addEventListener")}
  ${extra}`,ctx);
@@ -53,7 +53,7 @@ test('REGRESSION: calendar creation must reject concurrent reservation',()=>{
  const body=html.slice(start,html.indexOf('\n              });',start));
  const ctx=vm.createContext({});
  const openSetup=section('      editVenue=venue;', "      $('reservation-form').reset()");
- return vm.runInContext(`(async()=>{let overwritten=false; const ref={},data={event:'New'},key='2027-01-08',venue='gras',stores={gras:{}},special='2027-01-01'; let editVenue,editKey,editVersion;
+ return vm.runInContext(`(async()=>{let overwritten=false; const sessionRole='admin',ref={},data={event:'New'},key='2027-01-08',venue='gras',stores={gras:{}},special='2027-01-01'; let editVenue,editKey,editVersion;
  ${openSetup}
  const transaction={get:async()=>({exists:()=>true}),set:()=>{overwritten=true},delete:()=>{}};
  try { ${body} } catch {} return overwritten;})()`,ctx).then(overwritten=>assert.equal(overwritten,false,'Existing booking overwritten when empty calendar date was opened'));
@@ -63,6 +63,10 @@ test('login submit starts disabled and is intercepted before SDK download',()=>{
  assert.ok(html.indexOf("$('login-form').addEventListener('submit',e=>e.preventDefault())")<html.indexOf('async function initializeCloud'));
 });
 test('unauthenticated writes fail',async()=>await assert.rejects(vm.runInContext(`commit('2027-01-02',{})`,context()),/Inicia sesión/));
+test('viewer cannot create, update or delete',async()=>{
+ const ctx=context("sessionRole='viewer';cloud={write:async()=>{throw Error('UNSAFE')}};cloudReady.gras=true;");
+ for(const value of ['{}','null']) await assert.rejects(vm.runInContext(`commit('2027-01-02',${value})`,ctx),/solo puede consultar/);
+});
 for(const scenario of ['changed','deleted']) test('reject stale '+scenario+' booking',async()=>{
  const start=html.indexOf('const existing=await transaction.get(ref);');
  const body=html.slice(start,html.indexOf('\n              });',start));

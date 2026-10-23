@@ -158,9 +158,9 @@
   <section id="login-screen" class="login-screen">
     <div class="login-card">
       <h1>RECREO LAS VEGAS</h1>
-      <p>Acceso compartido a reservas 2027</p>
+      <p>Acceso a reservas 2027</p>
       <form id="login-form">
-        <label>Usuario<input id="login-user" autocomplete="username" value="lasvegas" required></label>
+        <label>Usuario<input id="login-user" autocomplete="username" placeholder="Tu usuario" required></label>
         <label>Contraseña<input id="login-password" type="password" autocomplete="current-password" required></label>
         <p id="login-error" class="error" role="alert" hidden></p>
         <button type="submit" class="primary" id="login-submit" disabled>Conectando…</button>
@@ -208,7 +208,7 @@
     <p id="chino-notice" class="notice" hidden>Reserva protegida de Chino. Comunícate directamente con Chino para solicitar cambios.</p>
     <form id="reservation-form">
       <label>Fecha<input type="date" id="res-date" min="2027-01-01" max="2027-12-31" required></label>
-      <div class="fields"><label>Registrado por<select id="res-registered-by" required><option>Wilmer</option><option>Juan</option><option>Chino</option></select></label><label>Estado<select id="res-status" required><option>Confirmado</option><option>Pendiente</option></select></label></div>
+      <div class="fields"><label>Registrado por<select id="res-registered-by" required><option>Wilmer</option><option>Juan</option><option>Chino</option><option>Jhoan</option></select></label><label>Estado<select id="res-status" required><option>Confirmado</option><option>Pendiente</option></select></label></div>
       <label>Evento<input id="res-event" type="text" required maxlength="120" placeholder="Ej. Campeonato o cumpleaños"></label>
       <label>Adelanto (S/)<input id="res-advance" type="number" inputmode="decimal" min="0" max="999999999" step="0.01" placeholder="0.00"></label>
       <label>Nota u observación<textarea id="res-notes" rows="2" maxlength="2000" placeholder="Detalles de la reserva"></textarea></label>
@@ -269,10 +269,13 @@ service cloud.firestore {
     const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     const special = '2027-01-01';
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'calendario-2027-reservas-app-v2';
-    // Cambia este correo por el de la cuenta compartida que crearás en Firebase Authentication.
-    // El nombre visible seguirá siendo 'lasvegas'. Nunca escribas la contraseña aquí.
-    const SHARED_LOGIN_EMAIL = 'lasvegas@gmail.com';
-    const SHARED_LOGIN_USER = 'lasvegas';
+    const LOGIN_ACCOUNTS = {
+      'WILMER':'wilmer@recreolasvegas.web.app',
+      'CHINO VEGAS':'chino@recreolasvegas.web.app',
+      'JHOAN':'jhoan@recreolasvegas.web.app',
+      'LASVEGAS':'trabajador@recreolasvegas.web.app'
+    };
+    let sessionRole=null, sessionGeneration=0;
     let authClient = null, authSDKClient = null, stopCloudListeners = [];
     let editVersion=null;
     function reservationVersion(r) {
@@ -385,12 +388,15 @@ service cloud.firestore {
     function formError(message) { $('form-error').textContent=message; $('form-error').hidden=!message; }
     function openModal(key=null) {
       editVenue=venue; const r=key?stores[venue][key]:null, protectedDay=key===special;
+      if(sessionRole!=='admin'&&!r)return;
+      const readOnly=protectedDay||sessionRole!=='admin';
       editKey=r?key:null; editVersion=r?reservationVersion(r):null;
       $('reservation-form').reset(); formError(''); $('delete-confirm').hidden=true;
-      $('modal-date-title').textContent=protectedDay?'Reserva protegida':r?'Editar reserva':'Nueva reserva'; $('modal-date-subtitle').textContent=`Sede ${venue.toUpperCase()} · 2027`;
+      $('modal-date-title').textContent=protectedDay?'Reserva protegida':readOnly?'Consultar reserva':r?'Editar reserva':'Nueva reserva'; $('modal-date-subtitle').textContent=`Sede ${venue.toUpperCase()} · 2027`;
       $('res-date').value=key||''; $('res-date').disabled=!!key;
-      for(const [id,field,fallback] of [['res-registered-by','registeredBy','Wilmer'],['res-status','status','Confirmado'],['res-event','event',''],['res-advance','advance',''],['res-notes','notes','']]) { $(id).value=r?.[field]??fallback; $(id).disabled=protectedDay; }
-      $('chino-notice').hidden=!protectedDay; $('btn-save').hidden=protectedDay; $('btn-delete').hidden=!r||protectedDay;
+      for(const [id,field,fallback] of [['res-registered-by','registeredBy','Wilmer'],['res-status','status','Confirmado'],['res-event','event',''],['res-advance','advance',''],['res-notes','notes','']]) { $(id).value=r?.[field]??fallback; $(id).disabled=readOnly; }
+      $('chino-notice').hidden=!protectedDay; $('btn-save').hidden=readOnly; $('btn-delete').hidden=!r||readOnly;
+      if(!r) $('res-registered-by').value=({'WILMER':'Wilmer','CHINO VEGAS':'Chino','JHOAN':'Jhoan'})[authClient?.currentUser?.displayName]||'Wilmer';
       modal.showModal(); document.body.style.overflow='hidden'; (protectedDay?$('close-modal'):key?$('res-event'):$('res-date')).focus();
     }
     function closeModal() { if(!busy) modal.close(); }
@@ -400,6 +406,7 @@ service cloud.firestore {
     function setBusy(value) { busy=value; for(const id of ['btn-save','btn-delete','confirm-delete','cancel-delete','close-modal','cancel-modal']) $(id).disabled=value; $('btn-save').textContent=value?'Guardando…':'Guardar reserva'; }
     async function commit(key,data) {
       if(key===special) throw new Error('El 1 de enero está protegido. Comunícate con Chino.');
+      if(sessionRole!=='admin') throw new Error('Tu usuario solo puede consultar reservas.');
       if(!cloud) throw new Error('Inicia sesión y espera a que las reservas estén sincronizadas.');
       const target=editVenue;
       if(cloud) { if(!cloudReady[target])throw new Error('Espera a que se carguen las reservas de esta sede.'); await cloud.write(target,key,data); }
@@ -468,6 +475,7 @@ service cloud.firestore {
           render();
           cloud={write:async(v,key,data)=>{
             if(!auth.currentUser || auth.currentUser.isAnonymous) throw new Error('Debes iniciar sesión.');
+            if(sessionRole!=='admin') throw new Error('Tu usuario solo puede consultar reservas.');
             const ref=fs.doc(db,...path(v),key);
             try {
               await fs.runTransaction(db,async transaction=>{
@@ -483,9 +491,10 @@ service cloud.firestore {
             const error=errors.gras||errors.recreo;
             $('access-setup').hidden=true;
             if(error) connection('Revisar conexión','error',firebaseError(error));
-            else if(cloudReady.gras&&cloudReady.recreo) connection('Sincronizado','cloud','Reservas compartidas entre dispositivos. Los cambios se guardan en la nube.');
+            else if(cloudReady.gras&&cloudReady.recreo) connection('Sincronizado','cloud',sessionRole==='viewer'?'Acceso de consulta. Puedes ver las reservas de ambas sedes.':'Acceso de administrador. Los cambios se guardan en la nube.');
             else connection('Esperando conexión','local','Esperando los datos de Firebase. No guardes reservas hasta que esté sincronizado.');
-            $('new-reservation').disabled=!!error||!cloudReady.gras||!cloudReady.recreo;
+            $('new-reservation').hidden=sessionRole!=='admin';
+            $('new-reservation').disabled=sessionRole!=='admin'||!!error||!cloudReady.gras||!cloudReady.recreo;
           }
           for(const v of ['gras','recreo']) {
             const stop=fs.onSnapshot(fs.collection(db,...path(v)),{includeMetadataChanges:true},snapshot=>{
@@ -498,29 +507,33 @@ service cloud.firestore {
           }
         }
         // Existing sessions are restored by Firebase on the same device.
-        authSDK.onAuthStateChanged(auth,user=>{
-          if(user && !user.isAnonymous && user.email===SHARED_LOGIN_EMAIL) startSession();
-          else {
-            stopListeners(); stores={gras:normalizeStore({}),recreo:normalizeStore({})};
-            modal.close(); showLogin(''); render();
-          }
+        authSDK.onAuthStateChanged(auth,async user=>{
+          const generation=++sessionGeneration;
+          stopListeners(); sessionRole=null; modal.close(); showLogin('');
+          stores={gras:normalizeStore({}),recreo:normalizeStore({})}; render();
+          if(!user||user.isAnonymous)return;
+          try {
+            const token=await authSDK.getIdTokenResult(user,true);
+            if(generation!==sessionGeneration)return;
+            if(!['admin','viewer'].includes(token.claims.reservasRole)) {
+              showLogin('Este usuario no tiene acceso. Usa uno de los nuevos usuarios autorizados.'); return;
+            }
+            sessionRole=token.claims.reservasRole;
+            startSession();
+          } catch(error) { if(generation===sessionGeneration)showLogin(firebaseError(error)); }
         });
         $('login-submit').disabled=false;
         $('login-submit').textContent='Iniciar sesión';
         $('login-form').addEventListener('submit',async e=>{
           e.preventDefault();
-          const name=$('login-user').value.trim();
-          if(name!==SHARED_LOGIN_USER) { showLogin('Usuario o contraseña incorrectos.'); return; }
-          if(SHARED_LOGIN_EMAIL.startsWith('CONFIGURAR_')) {
-            $('login-error').textContent='Primero configura SHARED_LOGIN_EMAIL en el archivo HTML con el correo creado en Firebase.';
-            $('login-error').hidden=false;
-            return;
-          }
+          const name=$('login-user').value.trim().replace(/\s+/g,' ').toUpperCase();
+          const loginEmail=LOGIN_ACCOUNTS[name];
+          if(!loginEmail) { showLogin('Usuario o contraseña incorrectos.'); return; }
           const password=$('login-password').value;
           $('login-submit').disabled=true;
           $('login-error').hidden=true;
           try {
-            await authSDK.signInWithEmailAndPassword(auth,SHARED_LOGIN_EMAIL,password);
+            await authSDK.signInWithEmailAndPassword(auth,loginEmail,password);
             $('login-password').value='';
           } catch(error) {
             $('login-error').textContent=loginError(error);

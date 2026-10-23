@@ -1,5 +1,13 @@
 # Revisión de Recreo Las Vegas
 
+## Accesos individuales
+
+Se reemplazó el acceso compartido por cuatro cuentas de Firebase Authentication. WILMER, CHINO VEGAS y JHOAN llevan el claim `reservasRole=admin`; LASVEGAS lleva `reservasRole=viewer`. Las contraseñas se recibieron por stdin al aprovisionar y no forman parte del repositorio. El inicio de sesión real de cada cuenta y sus claims se comprobaron durante la creación.
+
+La interfaz restringe la edición según el token y las reglas publicadas aplican el mismo control en el servidor. Las cuentas anteriores sin el claim ya no tienen acceso a las reservas. Las reservas existentes no se modificaron.
+
+Validación: 26 pruebas unitarias, integración DOM para administrador y consulta, y 43 evaluaciones de reglas con Firebase Rules API (sin escrituras reales), cubriendo ambas sedes, lectura/listado, creación, edición, eliminación, usuario anónimo, usuario sin rol y fecha protegida.
+
 ## Actualización tras correcciones
 
 Corregidos los hallazgos 1–5: creación diferenciada de edición, comparación del contenido original en transacciones, botón de acceso bloqueado hasta inicializar, prevención temprana del envío nativo, observador de autenticación y validación UTC de fechas. Se bloquean escrituras sin sesión cloud.

@@ -8,12 +8,11 @@ const os=require('node:os');
  const project='recreolasvegas';
  const auth=await get(`https://identitytoolkit.googleapis.com/admin/v2/projects/${project}/config`);
  console.log(JSON.stringify({passwordEnabled:auth.signIn?.email?.enabled,authorizedDomains:auth.authorizedDomains}));
- const users=await get(`https://identitytoolkit.googleapis.com/v1/projects/${project}/accounts:lookup`,{email:['lasvegas@gmail.com']});
- console.log(JSON.stringify({loginAccountExists:!!users.users?.length,disabled:users.users?.[0]?.disabled||false}));
+ const users=await get(`https://identitytoolkit.googleapis.com/v1/projects/${project}/accounts:lookup`,{email:['wilmer@recreolasvegas.web.app','chino@recreolasvegas.web.app','jhoan@recreolasvegas.web.app','trabajador@recreolasvegas.web.app']});
+ console.log(JSON.stringify({accounts:users.users?.map(u=>({name:u.displayName,disabled:!!u.disabled,role:JSON.parse(u.customAttributes||'{}').reservasRole}))}));
  const release=await get(`https://firebaserules.googleapis.com/v1/projects/${project}/releases/cloud.firestore`);
  const rules=await get(`https://firebaserules.googleapis.com/v1/${release.rulesetName}`);
  const ruleText=rules.source.files.map(f=>f.content).join('\n');
- console.log(JSON.stringify({loginUidListedInRules:!!users.users?.[0] && ruleText.includes('"'+users.users[0].localId+'"')}));
- for(const file of rules.source.files) console.log('RULES '+file.content);
+ console.log(JSON.stringify({roleRulesPublished:ruleText.includes('request.auth.token.reservasRole')}));
  for(const file of ['','logo-las-vegas.png','logo-gras-blanco.png']) {const r=await fetch('https://recreolasvegas.web.app/'+file);console.log('HTTP '+file+' '+r.status);}
 })().catch(e=>{console.error(e.message);process.exitCode=1;});
