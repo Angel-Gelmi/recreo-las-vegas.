@@ -15,7 +15,7 @@ const tick=()=>new Promise(r=>setTimeout(r,40));
   assert.notEqual(holidays['2027-12-24'][0].kind,'Feriado nacional');
   const manifest=JSON.parse(fs.readFileSync(root+'v2/manifest.webmanifest','utf8'));
   assert.equal(manifest.display,'standalone');assert.equal(manifest.lang,'es-PE');
-  for(const icon of manifest.icons)assert.ok(fs.existsSync(root+'v2/'+icon.src));
+  for(const icon of manifest.icons)assert.ok(fs.existsSync(root+'v2/'+icon.src.split('?')[0]));
   for(const filename of ['index.html','demo.html']){
     const html=fs.readFileSync(root+'v2/'+filename,'utf8');
     const script=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].find(m=>m[1].includes("'use strict'"));

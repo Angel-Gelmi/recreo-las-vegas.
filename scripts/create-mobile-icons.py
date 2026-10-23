@@ -1,18 +1,23 @@
-"""Export simple code-drawn calendar icons; no generated imagery or modified source logos."""
+"""Resize the supplied logo without redrawing it; retain safe Android mask margins."""
 from pathlib import Path
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 
-dest=Path(__file__).resolve().parents[1]/'assets/icons'
-for name,size in [('app-icon-192.png',192),('app-icon-512.png',512),('app-icon-maskable.png',512)]:
-    # Essential contents stay inside the maskable safe zone.
-    scale=4
-    im=Image.new('RGB',(size*scale,size*scale),'#000000');d=ImageDraw.Draw(im)
-    def box(coords,**kwargs):
-        d.rounded_rectangle(tuple(int(n*size*scale) for n in coords),**kwargs)
-    box((.20,.22,.80,.79),radius=int(size*scale*.06),fill='#111111',outline='#ffffff',width=max(2,int(size*scale*.012)))
-    d.line([(size*scale*.20,size*scale*.40),(size*scale*.80,size*scale*.40)],fill='#ffffff',width=int(size*scale*.012))
-    for x in [.34,.66]:box((x-.012,.16,x+.012,.29),radius=int(size*scale*.012),fill='#ffffff')
-    font=ImageFont.truetype('C:/Windows/Fonts/arialbd.ttf',int(size*scale*.20))
-    d.text((size*scale*.50,size*scale*.59),'LV',font=font,fill='#ffffff',anchor='mm')
-    im.resize((size,size),Image.Resampling.LANCZOS).save(dest/name)
-print('App icons exported at 192px and 512px, including a maskable icon.')
+root = Path(__file__).resolve().parents[1]
+source = root / 'assets/images/logo-app.png'
+dest = root / 'assets/icons'
+dest.mkdir(parents=True, exist_ok=True)
+with Image.open(source) as original:
+    logo = original.convert('RGBA')
+    for name, size, fraction in [
+        ('app-icon-192.png', 192, 1.0),
+        ('app-icon-512.png', 512, 1.0),
+        ('app-icon-maskable.png', 512, 0.8),
+    ]:
+        scaled = logo.copy()
+        scaled.thumbnail((round(size * fraction), round(size * fraction)), Image.Resampling.LANCZOS)
+        canvas = Image.new('RGB', (size, size), 'white')
+        canvas.paste(scaled, ((size-scaled.width)//2, (size-scaled.height)//2), scaled)
+        canvas.save(dest / name, optimize=True)
+        with Image.open(dest / name) as result:
+            assert result.size == (size, size) and result.mode == 'RGB'
+        print(f'{name}: {size}x{size}, original logo preserved')

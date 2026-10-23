@@ -31,7 +31,7 @@ firestore.rules
 
 ## Desarrollo
 
-Requisitos: Node.js 22.12 o superior, npm y Python 3. Pillow solo se necesita para volver a exportar logos e iconos; los recursos exportados están versionados. El generador de iconos utiliza Arial de Windows.
+Requisitos: Node.js 22.12 o superior, npm y Python 3. Pillow solo se necesita para volver a exportar logos e iconos; los recursos exportados están versionados. `python scripts/create-mobile-icons.py` exporta los iconos desde `assets/images/logo-app.png`, sin redibujar el logo.
 
 ```sh
 npm ci

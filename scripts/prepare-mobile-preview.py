@@ -13,6 +13,7 @@ for name in ['logo-gras-app.webp','logo-las-vegas.png']:
     shutil.copyfile(root/'assets/images'/name,preview/'v2'/name)
 original = (root/'src/templates/base.html').read_text(encoding='utf-8')
 s = original
+s = s.replace('rel="apple-touch-icon" href="logo-las-vegas.png"', 'rel="apple-touch-icon" href="app-icon-192.png?v=logo-red-1"')
 s = s.replace('<h1>RECREO LAS VEGAS</h1>', '<h2>RECREO LAS VEGAS</h2>')
 s = s.replace('<div class="login-card">', '<div class="login-card"><div class="login-mark"><img src="logo-las-vegas.png" alt="Las Vegas" width="150" height="150"></div>')
 s = s.replace('</head>', '<link rel="manifest" href="manifest.webmanifest">\n<link rel="stylesheet" href="mobile.css">\n<script src="holidays.js"></script>\n<script src="festivals.js"></script>\n<script src="mobile.js"></script>\n</head>')
