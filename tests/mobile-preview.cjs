@@ -30,6 +30,15 @@ const tick=()=>new Promise(r=>setTimeout(r,40));
   const w=dom.window,d=w.document,$=id=>d.getElementById(id);
   await new Promise(resolve=>{if(d.readyState==='complete')resolve();else w.addEventListener('load',resolve,{once:true});});await tick();
   assert.deepEqual(errors,[]);
+  assert.equal(d.documentElement.dataset.theme,'dark');
+  d.querySelector('[data-theme-choice="light"]').click();
+  assert.equal(d.documentElement.dataset.theme,'light');
+  assert.equal(w.localStorage.getItem('vegas-display-theme'),'light');
+  assert.equal(d.querySelector('meta[name="color-scheme"]').content,'light');
+  assert.equal(d.querySelector('[data-theme-choice="light"]').getAttribute('aria-pressed'),'true');
+  d.querySelector('[data-theme-choice="dark"]').click();
+  assert.equal(d.documentElement.dataset.theme,'dark');
+  assert.equal(w.localStorage.getItem('vegas-display-theme'),'dark');
   assert.equal($('login-screen').hidden,true);assert.equal($('account-name').textContent,'Wilmer');
   for(const [date,items] of Object.entries(holidays)) {
     $('month-select').value=String(Number(date.slice(5,7))-1);$('month-select').dispatchEvent(new w.Event('change'));

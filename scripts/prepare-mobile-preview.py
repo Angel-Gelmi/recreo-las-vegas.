@@ -9,7 +9,7 @@ original = (root/'index.html').read_text(encoding='utf-8')
 s = original
 s = s.replace('<h1>RECREO LAS VEGAS</h1>', '<h2>RECREO LAS VEGAS</h2>')
 s = s.replace('</head>', '<link rel="manifest" href="manifest.webmanifest">\n<link rel="stylesheet" href="mobile.css">\n<script src="holidays.js"></script>\n<script src="festivals.js"></script>\n<script src="mobile.js"></script>\n</head>')
-s = s.replace('<body>', '<body>')
+s = s.replace('<body>', '<body><div class="wrap theme-toolbar"><div class="theme-options" role="group" aria-label="Apariencia"><button type="button" data-theme-choice="light" aria-pressed="false">Claro</button><button type="button" data-theme-choice="dark" aria-pressed="true">Oscuro</button></div></div>')
 s = s.replace('<header class="wrap topbar">', '<p id="connection-banner" class="connection-banner" role="status" hidden></p>\n  <header class="wrap topbar">')
 s = s.replace('Reservas 2027<br>GRAS & RECREO','Las Vegas<br>Ayacucho · 2027')
 s = s.replace('Dos sedes. Cada fecha, en su lugar.','Ayacucho, Perú · Reservas 2027')
@@ -56,6 +56,8 @@ s = s.replace('    initializeCloud();', '''    mobileUI=window.createMobileUI({
 # A changed script must bypass older browser caches on the next page load.
 mobile_version = hashlib.sha256((preview/'v2/mobile.js').read_bytes()).hexdigest()[:12]
 s = s.replace('src="mobile.js"', f'src="mobile.js?v={mobile_version}"')
+css_version = hashlib.sha256((preview/'v2/mobile.css').read_bytes()).hexdigest()[:12]
+s = s.replace('href="mobile.css"', f'href="mobile.css?v={css_version}"')
 (preview/'v2/index.html').write_bytes(s.encode('utf-8'))
 
 # A demo is a separate document, never a runtime switch in the real application.

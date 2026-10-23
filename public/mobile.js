@@ -1,3 +1,24 @@
+(() => {
+  const key='vegas-display-theme';
+  function apply(theme) {
+    document.documentElement.dataset.theme=theme;
+    document.documentElement.style.colorScheme=theme;
+    document.querySelector('meta[name="theme-color"]').content=theme==='light'?'#f5f6f3':'#000000';
+    document.querySelector('meta[name="color-scheme"]').content=theme;
+    document.querySelectorAll('[data-theme-choice]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.themeChoice===theme)));
+  }
+  let initial='dark';
+  try { if(localStorage.getItem(key)==='light')initial='light'; } catch {}
+  apply(initial);
+  document.addEventListener('DOMContentLoaded',()=>{
+    apply(initial);
+    document.querySelectorAll('[data-theme-choice]').forEach(button=>button.addEventListener('click',()=>{
+      const theme=button.dataset.themeChoice;
+      apply(theme);
+      try { localStorage.setItem(key,theme); } catch {}
+    }));
+  },{once:true});
+})();
 window.createMobileUI = api => {
   const $ = id => document.getElementById(id);
   const holidays=window.VEGAS_HOLIDAYS;

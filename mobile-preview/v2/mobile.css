@@ -1,5 +1,13 @@
 /* Mobile first: calendario al alcance del pulgar, superficie negra de la marca. */
 :root { --radius:16px; }
+:root[data-theme="light"] { --ground:#f5f6f3; --surface:#fff; --raised:#e6e9e2; --text:#20251d; --muted:#53604c; --faint:#687262; --rule:#dbe0d5; --control:#838d7b; --accent:#3e6411; --positive:#e7f0d8; --warning:#815600; --warning-bg:#fff0cf; --negative:#b5283b; }
+:root[data-theme="light"] .day:nth-child(7n),:root[data-theme="light"] .day:nth-child(7n+1) { background:#f2f4ee; }
+:root[data-theme="light"] .day.inactive { background:#e9ece5; }
+@media(hover:hover) and (pointer:fine) { :root[data-theme="light"] .primary:hover { background:#384330; } }
+.theme-toolbar { display:flex; justify-content:flex-end; padding-block:8px; }
+.theme-options { display:flex; gap:4px; padding:3px; border:1px solid var(--control); border-radius:999px; }
+.theme-options button { min-height:44px; padding:8px 16px; color:var(--muted); }
+.theme-options button[aria-pressed="true"] { background:var(--raised); color:var(--text); font-weight:600; }
 html { scroll-padding-bottom:100px; }
 body { padding-bottom:calc(84px + env(safe-area-inset-bottom)); }
 a { color:inherit; touch-action:manipulation; }
