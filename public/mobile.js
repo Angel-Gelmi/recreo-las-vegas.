@@ -1,10 +1,9 @@
 window.createMobileUI = api => {
   const $ = id => document.getElementById(id);
   const holidays=window.VEGAS_HOLIDAYS;
-  const sources=window.VEGAS_CALENDAR_SOURCES||{},seasons=window.VEGAS_FESTIVAL_SEASONS||[];
+  const seasons=window.VEGAS_FESTIVAL_SEASONS||[];
   const matches=item=>{const filter=$('festivity-filter').value;return filter==='all'||item.category==='feriado'||(filter==='ayacucho'&&item.category==='ayacucho');};
   const eventsFor=key=>(holidays[key]||[]).filter(matches);
-  function sourceLink(item){const ref=sources[item.sourceId];if(!ref)return null;const a=element('a','Fuente: '+ref.title,'festival-source');a.href=ref.url;a.target='_blank';a.rel='noopener noreferrer';return a;}
   let selected=null,view='calendar',installPrompt=null,lastSync=null;
   const fullDate=key=>new Intl.DateTimeFormat('es-PE',{weekday:'long',day:'numeric',month:'long',timeZone:'America/Lima'}).format(new Date(key+'T12:00:00Z'));
   const element=(tag,text,className)=>{const el=document.createElement(tag);if(text)el.textContent=text;if(className)el.className=className;return el;};
@@ -22,7 +21,7 @@ window.createMobileUI = api => {
     if(!selected?.startsWith(prefix))selected=prefix+'01';
     const monthlySeasons=seasons.filter(item=>item.months.includes(s.month+1)&&matches(item));
     $('season-notice').hidden=!monthlySeasons.length;
-    $('season-notice').textContent=monthlySeasons.length?`Temporada: ${monthlySeasons[0].name}${monthlySeasons.length>1?' y '+(monthlySeasons.length-1)+' más':''}. Ver programas por confirmar.`:'';
+    $('season-notice').textContent=monthlySeasons.map(item=>item.name).join(', ');
     $('mobile-nav').hidden=!s.sessionRole;
     $('account-name').textContent=s.owner||'LASVEGAS';
     $('account-role').textContent=s.sessionRole==='admin'?'Administrador · editas tus propias reservas':'Consulta · puedes ver las reservas de ambas sedes';
@@ -48,9 +47,7 @@ window.createMobileUI = api => {
     const head=element('div','','detail-head');head.append(element('h2',fullDate(selected)),element('span',!online?'Sin confirmar':r?r.status:'Disponible','detail-status'));detail.append(head);
     const holidayList=element('div','','detail-holidays');
     for(const f of eventsFor(selected)){
-      const line=element('div','','holiday-caption');line.append(element('p',f.name),element('small',f.kind+(f.place?' · '+f.place:'')));
-      if(f.note)line.append(element('p',f.note,'festival-note'));
-      const ref=sourceLink(f);if(ref)line.append(ref);holidayList.append(line);
+      const line=element('div','','holiday-caption');line.append(element('p',f.name));holidayList.append(line);
     }detail.append(holidayList);
     detail.append(element('p',r?r.event:online?'Una fecha para tu próximo evento':'Consultando esta fecha…','detail-event'));
     if(r){const meta=element('div','','detail-meta');meta.append(element('span','Reserva de '+r.registeredBy),element('span',api.money(r.advance)+' de adelanto','num'));detail.append(meta);}
@@ -65,10 +62,10 @@ window.createMobileUI = api => {
     $('festivity-list').replaceChildren();
     let count=0;
     for(const [date,items] of Object.entries(holidays).filter(([k])=>k.startsWith(prefix)).sort(([a],[b])=>a.localeCompare(b)))for(const item of items.filter(matches)){
-      count++;const block=element('div','','festival-entry');const row=element('button','','holiday-row');row.type='button';const copy=element('span',item.name);copy.append(element('small',item.kind+(item.place?' · '+item.place:'')));row.append(element('b',String(Number(date.slice(-2)))),copy);row.addEventListener('click',()=>{selected=date;api.render();$('day-detail').scrollIntoView({block:'center',behavior:'instant'});});block.append(row);const ref=sourceLink(item);if(ref)block.append(ref);$('festivity-list').append(block);
+      count++;const block=element('div','','festival-entry');const row=element('button','','holiday-row');row.type='button';const copy=element('span',item.name);row.append(element('b',String(Number(date.slice(-2)))),copy);row.addEventListener('click',()=>{selected=date;api.render();$('day-detail').scrollIntoView({block:'center',behavior:'instant'});});block.append(row);$('festivity-list').append(block);
     }
     for(const item of seasons.filter(item=>item.months.includes(s.month+1)&&matches(item))){
-      count++;const block=element('article','','festival-season');block.append(element('h3',item.name),element('p','Temporada · '+item.place,'festival-region'),element('p',item.note,'festival-note'));const ref=sourceLink(item);if(ref)block.append(ref);$('festivity-list').append(block);
+      count++;const block=element('article','','festival-season');block.append(element('h3',item.name));$('festivity-list').append(block);
     }
     $('festivity-title').textContent=`Feriados y celebraciones${count?' · '+count:''}`;
     if(!count)$('festivity-list').append(element('p','Sin fechas destacadas este mes.','detail-hint'));

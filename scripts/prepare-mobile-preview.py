@@ -20,7 +20,7 @@ s = s.replace('Selecciona una fecha para consultar o registrar una reserva.', 'T
 s = s.replace('        </section>\n      </div>\n      <aside>', '''        </section>
         <section id="day-detail" class="day-detail" aria-label="Detalle del día seleccionado" aria-live="polite"></section>
         <button id="mobile-new" class="primary new-mobile" type="button" disabled>+ Nueva reserva</button>
-        <details class="month-festivities"><summary id="festivity-title">Feriados y celebraciones</summary><label class="festivity-filter" for="festivity-filter">Mostrar en el calendario<select id="festivity-filter"><option value="all">Perú y Ayacucho</option><option value="ayacucho">Ayacucho + feriados nacionales</option><option value="feriado">Solo feriados nacionales</option></select></label><div id="festivity-list"></div><p class="holiday-source">Los feriados nacionales, las celebraciones y las temporadas sin programa confirmado se distinguen por su etiqueta. Ninguna festividad bloquea reservas. <a href="../FUENTES-FESTIVIDADES.md" target="_blank" rel="noopener">Fuentes y alcance</a></p></details>
+        <details class="month-festivities"><summary id="festivity-title">Feriados y celebraciones</summary><label class="festivity-filter" for="festivity-filter">Mostrar en el calendario<select id="festivity-filter"><option value="all">Perú y Ayacucho</option><option value="ayacucho">Ayacucho + feriados nacionales</option><option value="feriado">Solo feriados nacionales</option></select></label><div id="festivity-list"></div></details>
       </div>
       <aside>''')
 s = s.replace('    <footer>', '''    <section id="account-panel" class="account-panel" hidden aria-labelledby="account-title">
