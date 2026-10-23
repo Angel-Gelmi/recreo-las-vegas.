@@ -2,7 +2,7 @@
 
 ## Resultado y alcance
 
-Revisión del código principal y de la candidata móvil V2. Cambios preparados para GitHub; **sin despliegue en Firebase ni modificaciones a reservas reales**. La V1 histórica se conserva con su SHA-256 original.
+Revisión del código principal y de la candidata móvil V2. Cambios subidos a GitHub y **versión actual desplegada en Firebase el 23 de octubre de 2026**, sin modificar reservas reales. La V1 histórica se conserva con su SHA-256 original; V2 continúa como candidata para comparación.
 
 ## Problemas corregidos
 
@@ -34,7 +34,7 @@ El cliente genera updatedAt como control de versión; no es una firma ni un regi
 
 ## Pendientes antes de certificar producción
 
-- Desplegar, cuando se autorice, las cabeceras y reglas nuevas; verificar su respuesta en el dominio publicado.
+- Completado: Hosting y reglas desplegados, versión Hosting `472d8a390306fd33`. `node tests/deployment-readonly.cjs` verificó igualdad exacta del HTML y WebP publicados, cabeceras de seguridad, respuesta 404 y reglas activas idénticas al archivo local. Se repitieron las 40 pruebas, dos integraciones DOM y 130 evaluaciones de reglas sin fallos. Respaldo previo verificado de seis reservas, sin escrituras de documentos.
 - Elegir si se promueve la V2 móvil; su demo sigue aislado de los datos reales.
 - Probar teclado, instalación PWA y retorno desde WhatsApp en Android/iPhone físicos. La emulación no certifica estos comportamientos.
 - Hacer una prueba CRUD completa en un proyecto de staging y un ensayo de restauración. Las integraciones locales usan SDK simulado y las evaluaciones de reglas no son transacciones reales en producción.
