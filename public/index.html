@@ -153,7 +153,7 @@
     .password-field { display:flex; gap:8px; align-items:center; }
     .password-field input { min-width:0; flex:1; }
     .password-field button { flex-shrink:0; }
-    .session-controls { display:flex; gap:12px; align-items:center; }
+    .session-controls { display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
     .session-controls button { min-height:34px; padding:5px 10px; font-size:12px; }
   </style>
 </head>
@@ -175,7 +175,7 @@
   <div id="app-shell" hidden>
   <header class="wrap topbar">
     <div class="brand"><div id="brand-logo" class="brand-logo"><img id="brand-image" src="logo-las-vegas.png" width="1740" height="1740" alt="Recreo Las Vegas · Ayacucho, Perú"></div><span class="brand-context">Reservas 2027<br>GRAS & RECREO</span></div>
-    <div class="session-controls"><div id="sync-status" class="connection" role="status">Iniciando…</div><button id="logout" class="secondary" type="button">Cerrar sesión</button></div>
+    <div class="session-controls"><div id="sync-status" class="connection" role="status">Iniciando…</div><button id="reconnect" class="secondary" type="button" hidden>Reconectar</button><button id="logout" class="secondary" type="button">Cerrar sesión</button></div>
   </header>
   <main class="wrap">
     <div class="title-row"><div><h1>Calendario de reservas</h1><p>Dos sedes. Cada fecha, en su lugar.</p></div><button class="primary" id="new-reservation">+ Nueva reserva</button></div>
@@ -351,7 +351,7 @@ service cloud.firestore {
     try { const saved=JSON.parse(localStorage.getItem(storageKey)); if(saved) { stores.gras=normalizeStore(saved.gras); stores.recreo=normalizeStore(saved.recreo); } } catch { storageIssue=true; }
     for(const v of ['gras','recreo']) stores[v]=normalizeStore(stores[v]);
     function toast(message) { clearTimeout(toastTimer); $('toast').textContent=message; $('toast').hidden=false; toastTimer=setTimeout(()=>$('toast').hidden=true,4500); }
-    function connection(text,state,note) { $('sync-status').textContent=text; $('sync-status').dataset.state=state; $('storage-note').textContent=note; }
+    function connection(text,state,note) { $('sync-status').textContent=text; $('sync-status').dataset.state=state; $('sync-status').title=note; $('storage-note').textContent=note; $('reconnect').hidden=state!=='error'; }
     function persist(candidate) { localStorage.setItem(storageKey,JSON.stringify(candidate)); }
     function entries() { const prefix=`2027-${String(month+1).padStart(2,'0')}-`; return Object.entries(stores[venue]).filter(([k])=>k.startsWith(prefix)).sort(([a],[b])=>a.localeCompare(b)); }
     function renderAgenda() {
@@ -501,7 +501,7 @@ service cloud.firestore {
           function updateConnection() {
             const error=errors.gras||errors.recreo;
             $('access-setup').hidden=true;
-            if(error) connection('Revisar conexión','error',firebaseError(error));
+            if(error) connection(error.code==='permission-denied'?'Actualizar acceso':'Revisar conexión','error',firebaseError(error));
             else if(cloudReady.gras&&cloudReady.recreo) connection('Sincronizado','cloud',sessionRole==='viewer'?'Acceso de consulta. Puedes ver las reservas de ambas sedes.':'Acceso de administrador. Los cambios se guardan en la nube.');
             else connection('Esperando conexión','local','Esperando los datos de Firebase. No guardes reservas hasta que esté sincronizado.');
             $('new-reservation').hidden=sessionRole!=='admin';
@@ -535,6 +535,16 @@ service cloud.firestore {
         });
         $('login-submit').disabled=false;
         $('login-submit').textContent='Iniciar sesión';
+        $('reconnect').addEventListener('click',async()=>{
+          $('reconnect').disabled=true;
+          try {
+            if(!auth.currentUser) { showLogin('Vuelve a iniciar sesión.'); return; }
+            const token=await authSDK.getIdTokenResult(auth.currentUser,true);
+            if(!['admin','viewer'].includes(token.claims.reservasRole)) { await authSDK.signOut(auth); showLogin('Inicia sesión con uno de los nuevos usuarios.'); return; }
+            sessionRole=token.claims.reservasRole; startSession();
+          } catch(error) { connection('Revisar conexión','error',firebaseError(error)); }
+          finally { $('reconnect').disabled=false; }
+        });
         $('login-form').addEventListener('submit',async e=>{
           e.preventDefault();
           const name=$('login-user').value.trim().replace(/\s+/g,' ').toUpperCase();
