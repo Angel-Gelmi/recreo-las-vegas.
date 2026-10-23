@@ -49,7 +49,7 @@ test('a completed write from a previous session cannot populate the next session
  await assert.rejects(vm.runInContext("commit('2027-01-02',booking())",ctx),/sesión cambió/);
  assert.equal(vm.runInContext('Object.keys(stores.gras).length',ctx),0);
 });
-test('published copy matches source',()=>assert.equal(fs.readFileSync('public/index.html','utf8'),html));
+test('published copy matches reviewed mobile source',()=>assert.equal(fs.readFileSync('public/index.html','utf8'),fs.readFileSync('mobile-preview/v2/index.html','utf8')));
 test('referenced current logos exist',()=>{
  for(const file of ['logo-gras-blanco.png','logo-gras-app.webp','logo-las-vegas.png']) assert.ok(fs.existsSync('public/'+file));
 });

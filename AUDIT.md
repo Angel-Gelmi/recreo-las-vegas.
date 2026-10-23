@@ -2,7 +2,7 @@
 
 ## Resultado y alcance
 
-Revisión del código principal y de la candidata móvil V2. Cambios subidos a GitHub y **versión actual desplegada en Firebase el 23 de octubre de 2026**, sin modificar reservas reales. La V1 histórica se conserva con su SHA-256 original; V2 continúa como candidata para comparación.
+Revisión del código principal y de la versión móvil V2. **V2 elegida por el usuario y publicada en Firebase el 23 de octubre de 2026**, con calendario de Perú y Ayacucho: 75 fechas (incluidos 16 feriados nacionales), siete temporadas y enlaces a fuentes. La V1 histórica conserva su SHA-256 original. El build reproducible incluye el calendario y todos los recursos móviles en `public/`; no incluye el SDK de demostración. La verificación posterior confirmó igualdad exacta de HTML, estilos, scripts, catálogo, fuentes, iconos y recursos PWA publicados, además de cabeceras y reglas activas. Respaldo previo de seis reservas sin modificar documentos reales.
 
 ## Problemas corregidos
 
@@ -35,7 +35,7 @@ El cliente genera updatedAt como control de versión; no es una firma ni un regi
 ## Pendientes antes de certificar producción
 
 - Completado: Hosting y reglas desplegados, versión Hosting `472d8a390306fd33`. `node tests/deployment-readonly.cjs` verificó igualdad exacta del HTML y WebP publicados, cabeceras de seguridad, respuesta 404 y reglas activas idénticas al archivo local. Se repitieron las 40 pruebas, dos integraciones DOM y 130 evaluaciones de reglas sin fallos. Respaldo previo verificado de seis reservas, sin escrituras de documentos.
-- Elegir si se promueve la V2 móvil; su demo sigue aislado de los datos reales.
+- Completado: el usuario eligió promover V2. Las pruebas comprueban igualdad de los recursos de producción con los revisados, ausencia del SDK demo, permisos y funcionamiento del calendario. Inspección visual a 390, 768 y 1440 px sin fallos del inspector; avisos de textos secundarios pequeños y poco color en un mes sin reservas. El demo sigue aislado de los datos reales.
 - Probar teclado, instalación PWA y retorno desde WhatsApp en Android/iPhone físicos. La emulación no certifica estos comportamientos.
 - Hacer una prueba CRUD completa en un proyecto de staging y un ensayo de restauración. Las integraciones locales usan SDK simulado y las evaluaciones de reglas no son transacciones reales en producción.
 - Activar un respaldo programado y verificar permisos de su almacenamiento si se requiere operación continua. No se habilitaron servicios de pago ni se cambió facturación.

@@ -19,7 +19,7 @@ test('hosting CSP permits exactly the current inline scripts and rejects arbitra
   const csp=headers.find(h=>h.key==='Content-Security-Policy').value;
   assert.match(csp,/frame-ancestors 'none'/);assert.match(csp,/object-src 'none'/);
   assert.doesNotMatch(csp.split(';').find(s=>s.trim().startsWith('script-src')),/unsafe-inline|unsafe-eval/);
-  for(const match of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))if(match[1].trim())assert.ok(csp.includes("'sha256-"+crypto.createHash('sha256').update(match[1]).digest('base64')+"'"));
+  for(const match of fs.readFileSync('public/index.html','utf8').matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g))if(match[1].trim())assert.ok(csp.includes("'sha256-"+crypto.createHash('sha256').update(match[1]).digest('base64')+"'"));
   assert.equal(headers.find(h=>h.key==='X-Content-Type-Options').value,'nosniff');
 });
 test('PWA intercepts only requests within its own scope and does not cache Firebase',()=>{

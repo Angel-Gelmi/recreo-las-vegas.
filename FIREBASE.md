@@ -17,14 +17,14 @@ Cada documento usa la fecha `2027-MM-DD` como identificador, por lo que una sede
 
 ## Despliegue manual
 
-1. Ejecutar `npm ci` y `npm test`.
+1. Ejecutar `npm ci`, `npm run build` y `npm test`. El build genera la V2 móvil con festividades en `public/` y actualiza la CSP.
 2. Si cambió HTML, ejecutar `npm run prepare:hosting`: recalcula los hashes de los scripts para la CSP de `public/index.html`.
 3. Usar una sesión válida de Firebase CLI y ejecutar `npm run test:rules` y `npm run test:firebase`.
 4. Crear un respaldo con `node scripts/backup-firestore.cjs` antes de publicar cambios de datos o permisos.
-5. Revisar el diff y elegir la versión. La V2 sigue siendo candidata; un push a GitHub no la promueve.
+5. Revisar el diff. La V2 móvil fue elegida por el usuario para producción; un push a GitHub no ejecuta el despliegue.
 6. Cuando se autorice publicar, usar Firebase CLI con `deploy --project recreolasvegas --only hosting,firestore:rules`.
 
-No se ejecutó un despliegue durante la revisión de seguridad. Las cabeceras y reglas modificadas quedan preparadas en el repositorio para ese próximo despliegue.
+Las cabeceras y reglas de seguridad ya se desplegaron. Después de cada publicación, ejecutar `npm run test:deployment` para comprobar los archivos y las reglas realmente servidos.
 
 La CSP usa hashes de scripts inline y permite los SDK de Firebase desde gstatic, las conexiones a Authentication/Firestore y las fuentes usadas por la interfaz. Bloquea scripts inline arbitrarios, objetos incrustados y la inclusión del sitio en iframes. También se preparan `nosniff`, política de referencia, permisos de dispositivo desactivados y revalidación del HTML. Los controles deben volver a verificarse en el dominio después de desplegar.
 

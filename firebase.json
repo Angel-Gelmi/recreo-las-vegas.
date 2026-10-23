@@ -31,7 +31,7 @@
           },
           {
             "key": "Content-Security-Policy",
-            "value": "default-src 'self'; script-src 'self' 'sha256-OfOEU97XaKjHWxBcxOIDjfBNaolMxmJRPsyzjLiWusM=' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://firebaseinstallations.googleapis.com; frame-src https://recreolasvegas.firebaseapp.com; base-uri 'none'; object-src 'none'; form-action 'self'; frame-ancestors 'none'"
+            "value": "default-src 'self'; script-src 'self' 'sha256-9Gu/lTylwQzQjRmy1+P4ndSBG1uLLEhH0lDD9ldZyzc=' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://firebaseinstallations.googleapis.com; frame-src https://recreolasvegas.firebaseapp.com; base-uri 'none'; object-src 'none'; form-action 'self'; frame-ancestors 'none'"
           }
         ]
       },

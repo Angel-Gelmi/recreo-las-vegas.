@@ -6,7 +6,7 @@ const assert = require('node:assert/strict');
 (async () => {
   const origin = 'https://recreolasvegas.web.app';
   const config = JSON.parse(fs.readFileSync('firebase.json', 'utf8'));
-  for (const file of ['index.html', 'logo-gras-app.webp']) {
+  for (const file of ['index.html', 'logo-gras-app.webp', 'mobile.css', 'mobile.js', 'holidays.js', 'festivals.js', 'manifest.webmanifest', 'sw.js', 'offline.html', 'app-icon-192.png', 'app-icon-512.png', 'app-icon-maskable.png', 'FUENTES-FESTIVIDADES.md']) {
     const response = await fetch(origin + '/' + file, { signal: AbortSignal.timeout(30000) });
     assert.equal(response.status, 200, file);
     assert.deepEqual(Buffer.from(await response.arrayBuffer()), fs.readFileSync('public/' + file), file + ' deployed bytes');
@@ -28,5 +28,5 @@ const assert = require('node:assert/strict');
   const release = await read('https://firebaserules.googleapis.com/v1/projects/recreolasvegas/releases/cloud.firestore');
   const rules = await read('https://firebaserules.googleapis.com/v1/' + release.rulesetName);
   assert.equal(rules.source.files.find(file => file.name === 'firestore.rules').content, fs.readFileSync('firestore.rules', 'utf8'));
-  console.log('PASS deployed HTML and WebP match local bytes; security headers; HTTP 404; active Firestore rules match local source. No document writes.');
+  console.log('PASS deployed mobile HTML, calendar, styles, scripts, PWA assets and sources match local bytes; security headers; HTTP 404; active Firestore rules match local source. No document writes.');
 })().catch(error => { console.error(error.message); process.exitCode = 1; });

@@ -3,6 +3,8 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('nod
 const root='mobile-preview/';
 const tick=()=>new Promise(r=>setTimeout(r,40));
 (async()=>{
+  for(const file of ['index.html','mobile.css','mobile.js','holidays.js','festivals.js','manifest.webmanifest','sw.js','offline.html','app-icon-192.png','app-icon-512.png','app-icon-maskable.png'])assert.deepEqual(fs.readFileSync('public/'+file),fs.readFileSync(root+'v2/'+file),'Production must contain reviewed mobile asset: '+file);
+  assert.doesNotMatch(fs.readFileSync('public/index.html','utf8'),/demo-sdk\.js|window\.__previewSDK|id="demo-user"/);
   const snapshotHash=fs.readFileSync(root+'V1-SHA256.txt','utf8').split(' ')[0];
   assert.equal(require('node:crypto').createHash('sha256').update(fs.readFileSync(root+'v1/index.html')).digest('hex'),snapshotHash,'V1 snapshot must remain unchanged');
   const sandbox={window:{},Date};vm.runInNewContext(fs.readFileSync(root+'v2/holidays.js','utf8'),sandbox);
