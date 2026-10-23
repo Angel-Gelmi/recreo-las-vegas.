@@ -31,6 +31,13 @@ const tick=()=>new Promise(r=>setTimeout(r,40));
   await new Promise(resolve=>{if(d.readyState==='complete')resolve();else w.addEventListener('load',resolve,{once:true});});await tick();
   assert.deepEqual(errors,[]);
   assert.equal($('login-screen').hidden,true);assert.equal($('account-name').textContent,'Wilmer');
+  for(const [date,items] of Object.entries(holidays)) {
+    $('month-select').value=String(Number(date.slice(5,7))-1);$('month-select').dispatchEvent(new w.Event('change'));
+    d.querySelector('[data-date="'+date+'"]').click();
+    assert.equal($('day-detail').querySelector('.detail-holidays').textContent,items.map(item=>item.name).join(''),'Only festival names on '+date);
+    assert.equal(d.querySelectorAll('.festival-source,.festival-note,.festival-region,.holiday-source,#day-detail .holiday-caption small,#festivity-list small').length,0);
+  }
+  $('month-select').value='10';$('month-select').dispatchEvent(new w.Event('change'));d.querySelector('[data-date="2027-11-01"]').click();
   assert.match($('day-detail').textContent,/Todos los Santos/);assert.match($('day-detail').textContent,/Chino/);
   assert.equal(new URL(d.querySelector('#day-detail .detail-actions a').href).pathname,'/51975788880');
   assert.equal(d.querySelectorAll('[data-date="2027-11-01"] .holiday-dot').length,1);

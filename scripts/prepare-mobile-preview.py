@@ -53,6 +53,9 @@ s = s.replace('    initializeCloud();', '''    mobileUI=window.createMobileUI({
     });
     render();
     initializeCloud();''')
+# A changed script must bypass older browser caches on the next page load.
+mobile_version = hashlib.sha256((preview/'v2/mobile.js').read_bytes()).hexdigest()[:12]
+s = s.replace('src="mobile.js"', f'src="mobile.js?v={mobile_version}"')
 (preview/'v2/index.html').write_bytes(s.encode('utf-8'))
 
 # A demo is a separate document, never a runtime switch in the real application.

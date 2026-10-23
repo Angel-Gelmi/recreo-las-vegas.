@@ -6,7 +6,7 @@ const assert = require('node:assert/strict');
 (async () => {
   const origin = 'https://recreolasvegas.web.app';
   const config = JSON.parse(fs.readFileSync('firebase.json', 'utf8'));
-  for (const file of ['index.html', 'logo-gras-app.webp', 'mobile.css', 'mobile.js', 'holidays.js', 'festivals.js', 'manifest.webmanifest', 'sw.js', 'offline.html', 'app-icon-192.png', 'app-icon-512.png', 'app-icon-maskable.png', 'FUENTES-FESTIVIDADES.md']) {
+  for (const file of ['index.html', 'logo-gras-app.webp', 'mobile.css', 'mobile.js', 'holidays.js', 'festivals.js', 'manifest.webmanifest', 'sw.js', 'offline.html', 'app-icon-192.png', 'app-icon-512.png', 'app-icon-maskable.png']) {
     const response = await fetch(origin + '/' + file, { signal: AbortSignal.timeout(30000) });
     assert.equal(response.status, 200, file);
     assert.deepEqual(Buffer.from(await response.arrayBuffer()), fs.readFileSync('public/' + file), file + ' deployed bytes');

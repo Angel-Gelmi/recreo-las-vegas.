@@ -7,6 +7,7 @@ const files = ['index.html','mobile.css','mobile.js','holidays.js','festivals.js
   'manifest.webmanifest','sw.js','offline.html','app-icon-192.png','app-icon-512.png',
   'app-icon-maskable.png','logo-gras-app.webp','logo-las-vegas.png'];
 for (const file of files) fs.copyFileSync('mobile-preview/v2/'+file, 'public/'+file);
-fs.copyFileSync('mobile-preview/FUENTES-FESTIVIDADES.md','public/FUENTES-FESTIVIDADES.md');
+// Research stays in the repository; the published calendar shows names only.
+fs.rmSync('public/FUENTES-FESTIVIDADES.md', {force:true});
 execFileSync(process.execPath, ['scripts/prepare-hosting.cjs'], {stdio:'inherit'});
 console.log('Production prepared: mobile V2 with Peru and Ayacucho calendar. Historical V1 preserved.');
